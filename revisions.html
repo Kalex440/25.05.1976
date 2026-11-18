@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>25.05.1976 — Révisions</title>
+<script>try{var a=JSON.parse(localStorage.getItem("auth")||"null");if(!(a&&a.ok&&(a.rem||Date.now()-a.t<432e5)))location.replace("index.html")}catch(e){location.replace("index.html")}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="sun" viewBox="0 0 100 100"><g stroke="#ffb400" stroke-width="7" stroke-linecap="round"><path d="M50 6v12M50 82v12M6 50h12M82 50h12M19 19l8 8M73 73l8 8M81 19l-8 8M27 73l-8 8"/></g><circle cx="50" cy="50" r="24" fill="#ffd34d" stroke="#ffb400" stroke-width="4"/></symbol>
+    <symbol id="leaf" viewBox="0 0 100 100"><path d="M18 82C14 40 44 14 86 14c2 42-24 72-68 68z" fill="#7ccb5e" stroke="#3f8a2e" stroke-width="5" stroke-linejoin="round"/><path d="M22 78C40 58 56 44 74 28" stroke="#3f8a2e" stroke-width="5" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="book" viewBox="0 0 100 100"><path d="M50 24C38 16 22 16 12 20v58c10-4 26-4 38 4 12-8 28-8 38-4V20c-10-4-26-4-38 4z" fill="#e6f0ff" stroke="#1f63d6" stroke-width="5" stroke-linejoin="round"/><path d="M50 24v58" stroke="#1f63d6" stroke-width="5"/></symbol>
+    <symbol id="flower" viewBox="0 0 100 100"><path d="M50 60v34" stroke="#3f8a2e" stroke-width="6"/><path d="M50 82c-10-10-22-8-26-4 8 6 18 8 26 4z" fill="#7ccb5e"/><g fill="#5aa0ff" stroke="#1f63d6" stroke-width="3"><circle cx="50" cy="22" r="13"/><circle cx="72" cy="38" r="13"/><circle cx="64" cy="62" r="13"/><circle cx="36" cy="62" r="13"/><circle cx="28" cy="38" r="13"/></g><circle cx="50" cy="44" r="12" fill="#ffd34d" stroke="#ffb400" stroke-width="3"/></symbol>
+  </defs>
+</svg>
+
+<header><div class="wrap">
+  <div class="brand"><svg class="sunicon"><use href="#sun"/></svg><div><small>25.05.1976 · Philosophie</small>La nature et la justice</div></div>
+  <nav id="nav">
+    <a href="#accueil" data-v="accueil">Accueil</a>
+    <a href="#qcm" data-v="qcm">QCM</a>
+    <a href="#etudes" data-v="etudes">Études de texte</a>
+    <a href="#mes-notes" data-v="mes-notes">Mes notes</a>
+    <a href="#tableau" data-v="tableau">Tableau des notes</a>
+    <a href="#" class="out" onclick="logout();return false">Déconnexion</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="v-accueil">
+  <div class="hero">
+    <svg><use href="#flower"/></svg>
+    <div><h1>Prêt pour samedi ?</h1><div class="rule"></div></div>
+  </div>
+  <p>Vérifie que tu maîtrises les notions de <b>nature</b> et de <b>justice</b> : un QCM à points négatifs qui mélange le cours et la vidéo des Bons Profs, puis quatre études de texte de dix questions, avec indices et correction notée.</p>
+  <div class="card">
+    <h3 style="margin-top:0">Ton prénom (ou pseudo)</h3>
+    <p class="note" style="margin-top:0">Il apparaît avec ta note quand tu l'envoies à Kendji.</p>
+    <div class="row"><input type="text" id="pseudo" maxlength="40" placeholder="Ex. : Léa, terminale 3" style="max-width:340px"><span id="pseudoOk" class="note"></span></div>
+  </div>
+  <div class="grid2">
+    <a class="tile" href="#qcm"><svg class="ic"><use href="#sun"/></svg><b>QCM — 31 questions</b><p class="mut" style="margin:6px 0 0">Cours + vidéo, dans le désordre. +1 bonne réponse, −0,5 erreur, 0 si tu passes. Note sur 20.</p></a>
+    <a class="tile" href="#etudes"><svg class="ic"><use href="#book"/></svg><b>4 études de texte</b><p class="mut" style="margin:6px 0 0">Pascal, Rousseau (×2), Montesquieu. 10 questions chacune, avec indices et reformulations.</p></a>
+  </div>
+  <div class="card" id="saveInfo"></div>
+</section>
+
+<section id="v-qcm" class="hide">
+  <h1>QCM : la nature et la justice</h1>
+  <div class="rule"></div>
+  <p class="mut">31 questions mélangées : le cours et la vidéo des Bons Profs sur la nature (marquées 📺). Barème : <b>+1</b> par bonne réponse, <b>−0,5</b> par erreur, <b>0</b> si tu choisis « Je ne sais pas ». Ton total est ramené sur 20.</p>
+  <p class="note">La vidéo : <a href="https://www.youtube.com/watch?v=zZVCdOawe2E" target="_blank" rel="noopener">La nature — Philosophie — Terminale (Les Bons Profs)</a></p>
+  <div class="scorebar"><div><span class="note">Note</span><div class="big" id="qScore">0 / 20</div></div><div class="bar"><i id="qBar"></i></div><div class="note" id="qProg"></div><button class="btn alt sm" id="qReset">Recommencer</button></div>
+  <div id="qList"></div>
+  <div id="qEnd" class="card hide"></div>
+</section>
+
+<section id="v-etudes" class="hide">
+  <h1>Études de texte</h1>
+  <div class="rule"></div>
+  <p class="mut">Lis le texte, rédige tes réponses aux 10 questions, puis clique sur « Corriger ». Chaque question vaut 5 points, répartis entre les éléments attendus ; le total est ramené sur 20. Les indices ne retirent pas de points : sers-t'en.</p>
+  <div class="grid2" id="eTiles"></div>
+  <div id="eBody"></div>
+</section>
+
+<section id="v-mes-notes" class="hide">
+  <h1>Mes notes</h1>
+  <div class="rule"></div>
+  <div id="myNotes"></div>
+</section>
+
+<section id="v-tableau" class="hide">
+  <h1>Tableau des notes</h1>
+  <div class="rule"></div>
+  <p class="mut">Colle ici les codes de résultat que les élèves t'envoient. Le tableau est gardé sur cet appareil : utilise toujours le même téléphone ou ordinateur.</p>
+  <div class="card">
+    <h3 style="margin-top:0">Ajouter des codes de résultat</h3>
+    <textarea id="impTxt" placeholder="Colle un ou plusieurs codes (ou le message WhatsApp complet)"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn" id="impBtn">Ajouter au tableau</button><button class="btn alt sm" id="clrBtn">Vider le tableau</button><span id="impMsg" class="note"></span></div>
+  </div>
+  <div class="card" style="overflow-x:auto"><div id="board"></div></div>
+</section>
+
+</main>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

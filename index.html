@@ -5,446 +5,70 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>25.05.1976</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --navy:#16264a; --navy2:#2a3d6b; --gold:#b8913a; --gold-l:#f6efdf; --blue:#2f6fb5; --blue-l:#eaf2fb;
-  --ink:#1d2433; --mut:#5b6476; --line:#d9dde6; --bg:#fbfaf7; --ok:#2e7d4f; --ok-l:#e6f4ec; --ko:#b23b3b; --ko-l:#fbeaea;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
-.wrap{max-width:860px;margin:0 auto;padding:0 18px 60px}
-header{border-bottom:1px solid var(--line);background:#fff}
-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
-.brand{font-family:"Source Serif 4",serif;font-weight:700;font-size:20px;color:var(--navy)}
-.brand small{display:block;font:500 12px Inter;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
-nav{display:flex;gap:4px;flex-wrap:wrap}
-nav a{color:var(--navy2);text-decoration:none;padding:7px 12px;border-radius:8px;font-weight:500;font-size:14px}
-nav a.on{background:var(--blue-l);color:var(--blue)}
-h1,h2,h3{font-family:"Source Serif 4",serif;color:var(--navy);line-height:1.25}
-h1{font-size:30px;margin:28px 0 6px}
-h2{font-size:23px;margin:28px 0 8px}
-h3{font-size:18px;margin:18px 0 6px}
-.rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:6px 0 18px}
-.mut{color:var(--mut)}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 18px;margin:14px 0}
-.badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);font:600 13px Inter;margin-right:8px;flex:none}
-.qhead{display:flex;align-items:flex-start;gap:4px;font-weight:600}
-.opts{display:grid;gap:8px;margin-top:12px}
-.opt{text-align:left;border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 12px;font:inherit;cursor:pointer;color:var(--ink)}
-.opt:hover:not(:disabled){border-color:var(--blue);background:var(--blue-l)}
-.opt.ok{border-color:var(--ok);background:var(--ok-l)}
-.opt.ko{border-color:var(--ko);background:var(--ko-l)}
-.opt.skip{color:var(--mut);font-style:italic}
-.opt:disabled{cursor:default}
-.expl{margin-top:10px;padding:10px 12px;border-left:3px solid var(--gold);background:var(--gold-l);border-radius:0 8px 8px 0;font-size:14.5px}
-.btn{display:inline-block;border:1px solid var(--navy);background:var(--navy);color:#fff;border-radius:9px;padding:10px 16px;font:600 14.5px Inter;cursor:pointer;text-decoration:none}
-.btn.alt{background:#fff;color:var(--navy)}
-.btn.sm{padding:6px 11px;font-size:13px;font-weight:500}
-.btn:disabled{opacity:.5;cursor:default}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.scorebar{position:sticky;top:0;z-index:5;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.big{font:700 22px "Source Serif 4",serif;color:var(--navy)}
-input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font:inherit;background:#fff;color:var(--ink)}
-textarea{min-height:110px;resize:vertical}
-input:focus,textarea:focus{outline:2px solid var(--blue-l);border-color:var(--blue)}
-.texte{font-family:"Source Serif 4",serif;font-size:17px;line-height:1.7;background:#fff;border:1px solid var(--line);border-left:3px solid var(--navy);border-radius:0 12px 12px 0;padding:16px 20px;white-space:pre-line}
-.src{font-size:13.5px;color:var(--mut);margin-top:6px}
-.help{margin-top:8px;padding:9px 12px;background:var(--blue-l);border-radius:8px;font-size:14.5px}
-.elts{list-style:none;padding:0;margin:8px 0 0}
-.elts li{padding:4px 0;font-size:14.5px}
-.elts .y{color:var(--ok)} .elts .n{color:var(--ko)}
-.model{margin-top:8px;padding:10px 12px;border-left:3px solid var(--gold);background:var(--gold-l);border-radius:0 8px 8px 0;font-size:14.5px}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;text-decoration:none;color:inherit;display:block}
-.tile:hover{border-color:var(--blue)}
-.tile b{font-family:"Source Serif 4",serif;color:var(--navy);font-size:17px}
-table{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
-th,td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
-th{color:var(--navy);font-weight:600;font-size:13px}
-.code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;word-break:break-all;background:#f3f4f7;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
-.note{font-size:13.5px;color:var(--mut)}
-.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12.5px;border:1px solid var(--line);color:var(--mut)}
-.hide{display:none}
-@media (max-width:560px){h1{font-size:25px}.texte{font-size:16px;padding:14px}}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="login" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px">
-  <form id="loginForm" class="card" style="width:100%;max-width:380px">
-    <div class="brand" style="font-size:28px;margin-bottom:4px">25.05.1976</div>
-    <div class="rule"></div>
-    <p class="mut" style="margin-top:0">Identifie-toi pour accéder aux révisions.</p>
-    <label class="note" for="lid">Identifiant</label>
-    <input type="text" id="lid" autocomplete="username" autocapitalize="none" style="margin:4px 0 12px">
-    <label class="note" for="lpw">Mot de passe</label>
-    <input type="password" id="lpw" autocomplete="current-password" style="margin:4px 0 10px;width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font:inherit">
-    <label class="note" style="display:flex;gap:6px;align-items:center;margin-bottom:14px"><input type="checkbox" id="lrem"> Rester connecté sur cet appareil</label>
-    <button class="btn" type="submit" style="width:100%">Se connecter</button>
-    <p id="lerr" style="color:var(--ko);font-size:14px;margin:10px 0 0"></p>
+<svg class="floatsun" viewBox="0 0 100 100"><g stroke="#ffb400" stroke-width="7" stroke-linecap="round"><path d="M50 6v12M50 82v12M6 50h12M82 50h12M19 19l8 8M73 73l8 8M81 19l-8 8M27 73l-8 8"/></g><circle cx="50" cy="50" r="24" fill="#ffd34d" stroke="#ffb400" stroke-width="4"/></svg>
+<svg class="cloud" style="top:70px;width:170px;animation:drift 70s linear infinite" viewBox="0 0 170 70"><path d="M30 60h110a24 24 0 0 0 0-48 34 34 0 0 0-62-4 26 26 0 0 0-48 22A16 16 0 0 0 30 60z" fill="#fff"/></svg>
+<svg class="cloud" style="top:190px;width:120px;animation:drift 95s linear infinite;animation-delay:-40s" viewBox="0 0 170 70"><path d="M30 60h110a24 24 0 0 0 0-48 34 34 0 0 0-62-4 26 26 0 0 0-48 22A16 16 0 0 0 30 60z" fill="#fff"/></svg>
+
+<div class="login-page">
+  <form id="loginForm" class="login-card" autocomplete="on">
+    <div style="text-align:center"><svg width="64" height="64" viewBox="0 0 100 100"><path d="M50 60v34" stroke="#3f8a2e" stroke-width="6"/><path d="M50 82c-10-10-22-8-26-4 8 6 18 8 26 4z" fill="#7ccb5e"/><g fill="#5aa0ff" stroke="#1f63d6" stroke-width="3"><circle cx="50" cy="22" r="13"/><circle cx="72" cy="38" r="13"/><circle cx="64" cy="62" r="13"/><circle cx="36" cy="62" r="13"/><circle cx="28" cy="38" r="13"/></g><circle cx="50" cy="44" r="12" fill="#ffd34d" stroke="#ffb400" stroke-width="3"/></svg></div>
+    <div class="title">25.05.1976</div>
+    <div class="rule" style="margin:6px auto 14px"></div>
+    <div id="formFields">
+      <p class="mut" style="margin-top:0;text-align:center">Identifie-toi pour accéder aux révisions.</p>
+      <label for="lid">Identifiant</label>
+      <input type="text" id="lid" autocomplete="username" autocapitalize="none" spellcheck="false" style="margin:4px 0 12px">
+      <label for="lpw">Mot de passe</label>
+      <input type="password" id="lpw" autocomplete="current-password" style="margin:4px 0 10px">
+      <label class="note" style="display:flex;gap:6px;align-items:center;margin-bottom:16px;font-weight:600"><input type="checkbox" id="lrem"> Rester connecté sur cet appareil</label>
+      <button class="btn" type="submit" style="width:100%">Se connecter</button>
+      <p id="lerr" style="color:var(--ko);font-size:14px;margin:10px 0 0;text-align:center"></p>
+    </div>
+    <div id="opened" class="hide" style="text-align:center">
+      <p><b>Connexion réussie !</b><br>Les révisions se sont ouvertes dans un nouvel onglet.</p>
+      <a class="btn green" href="revisions.html" target="_blank" rel="noopener">Ouvrir les révisions</a>
+    </div>
   </form>
-</div>
-<div id="app" class="hide">
-<header><div class="wrap">
-  <div class="brand"><small>25.05.1976 · Philosophie</small>La nature et la justice</div>
-  <nav id="nav">
-    <a href="#accueil" data-v="accueil">Accueil</a>
-    <a href="#qcm" data-v="qcm">QCM</a>
-    <a href="#etudes" data-v="etudes">Études de texte</a>
-    <a href="#mes-notes" data-v="mes-notes">Mes notes</a>
-    <a href="#tableau" data-v="tableau">Tableau des notes</a>
-  </nav>
-</div></header>
-
-<main class="wrap">
-
-<!-- ACCUEIL -->
-<section id="v-accueil">
-  <h1>Te sens-tu prêt pour samedi ?</h1>
-  <div class="rule"></div>
-  <p>Ce site te permet de vérifier que tu maîtrises les notions de <b>nature</b> et de <b>justice</b> : un QCM chronométré à points négatifs, puis quatre études de texte où tu rédiges tes réponses et où tu es noté selon les éléments attendus.</p>
-  <div class="card">
-    <h3 style="margin-top:0">Ton prénom (ou pseudo)</h3>
-    <p class="note" style="margin-top:0">Il apparaît avec ta note sur le tableau de Kendji.</p>
-    <div class="row"><input type="text" id="pseudo" maxlength="40" placeholder="Ex. : Léa, terminale 3" style="max-width:340px"><span id="pseudoOk" class="note"></span></div>
-  </div>
-  <div class="grid2">
-    <a class="tile" href="#qcm"><b>QCM — 20 questions</b><p class="mut" style="margin:6px 0 0">+1 bonne réponse, −0,5 mauvaise réponse, 0 si tu passes. Note sur 20.</p></a>
-    <a class="tile" href="#etudes"><b>4 études de texte</b><p class="mut" style="margin:6px 0 0">Pascal, Rousseau (×2), Montesquieu. Indices et reformulations à chaque question.</p></a>
-  </div>
-  <div class="card" id="saveInfo"><span class="note">Connexion à l'enregistrement des notes…</span></div>
-</section>
-
-<!-- QCM -->
-<section id="v-qcm" class="hide">
-  <h1>QCM : la nature et la justice</h1>
-  <div class="rule"></div>
-  <p class="mut">Barème : <b>+1</b> par bonne réponse, <b>−0,5</b> par erreur, <b>0</b> si tu choisis « Je ne sais pas ». Ne réponds pas au hasard : une erreur coûte des points.</p>
-  <div class="scorebar"><div><span class="note">Score</span><div class="big" id="qScore">0 / 20</div></div><div class="note" id="qProg">0 / 20 répondues</div><button class="btn alt sm" id="qReset">Recommencer</button></div>
-  <div id="qList"></div>
-  <div id="qEnd" class="card hide"></div>
-</section>
-
-<!-- ETUDES -->
-<section id="v-etudes" class="hide">
-  <h1>Études de texte</h1>
-  <div class="rule"></div>
-  <p class="mut">Lis le texte, rédige tes réponses, puis clique sur « Corriger ». Chaque question vaut 5 points, répartis entre les éléments de réponse attendus. Les indices ne retirent pas de points : sers-t'en.</p>
-  <div class="grid2" id="eTiles"></div>
-  <div id="eBody"></div>
-</section>
-
-<!-- MES NOTES -->
-<section id="v-mes-notes" class="hide">
-  <h1>Mes notes</h1>
-  <div class="rule"></div>
-  <div id="myNotes"></div>
-</section>
-
-<!-- TABLEAU (propriétaire) -->
-<section id="v-tableau" class="hide">
-  <h1>Tableau des notes</h1>
-  <div class="rule"></div>
-  <p class="mut">Colle ici les codes de résultat que les élèves t'envoient. Le tableau est gardé sur cet appareil (utilise toujours le même téléphone ou ordinateur).</p>
-  <div class="card">
-    <h3 style="margin-top:0">Ajouter des codes de résultat</h3>
-    <textarea id="impTxt" placeholder="Colle un ou plusieurs codes (un par ligne, ou le message complet reçu)"></textarea>
-    <div class="row" style="margin-top:8px"><button class="btn" id="impBtn">Ajouter au tableau</button><button class="btn alt sm" id="clrBtn">Vider le tableau</button><span id="impMsg" class="note"></span></div>
-  </div>
-  <div class="card" style="overflow-x:auto"><div id="board"><span class="note">Chargement…</span></div></div>
-</section>
-
-</main>
 </div>
 
 <script>
-/* ========================= DONNÉES ========================= */
-const QCM = [
- {q:"Chez Hobbes, l'état de nature est :",o:["Un âge d'or paisible","Une guerre de chacun contre chacun","Une société sans État mais régie par la pitié","L'état des animaux seulement"],a:1,e:"Hobbes (Léviathan, 1651) : sans pouvoir commun, la vie humaine est « solitaire, misérable, dangereuse, animale et brève ». D'où la nécessité d'un contrat qui institue l'État."},
- {q:"« L'homme est par nature un animal politique » est une thèse de :",o:["Platon","Hobbes","Aristote","Rousseau"],a:2,e:"Aristote, Politiques I : la cité existe par nature, car l'homme a le logos (la parole) qui lui permet de discuter du juste et de l'injuste."},
- {q:"Ce qui est « légal » est :",o:["Ce qui est juste en soi","Ce qui est conforme aux lois en vigueur","Ce qui est conforme à la nature","Ce qui est conforme à la morale"],a:1,e:"Le légal relève du droit positif (les lois posées dans une société). Le légitime/juste renvoie à un idéal qui permet de juger les lois elles-mêmes."},
- {q:"Le « droit naturel » désigne :",o:["Le droit des animaux","Le droit du plus fort","Un ensemble de principes de justice universels, antérieurs et supérieurs aux lois écrites","Les lois votées démocratiquement"],a:2,e:"Le droit naturel (jusnaturalisme) est fondé sur la nature humaine ou la raison ; il sert de critère pour juger le droit positif. Il s'oppose au positivisme juridique."},
- {q:"Dans la tragédie de Sophocle, Antigone désobéit à Créon au nom :",o:["De son intérêt personnel","Des lois non écrites et immuables des dieux","De la volonté du peuple","Du droit du plus fort"],a:1,e:"Antigone enterre son frère malgré l'édit de Créon : elle oppose aux lois de la cité des lois « non écrites », figure classique du droit naturel."},
- {q:"« Ne pouvant faire que ce qui est juste fût fort, on a fait que ce qui est fort fût juste. » Qui l'écrit ?",o:["Pascal","Descartes","Kant","Montesquieu"],a:0,e:"Pascal, Pensées. La justice humaine est fondée sur la force et la coutume, faute de pouvoir atteindre la vraie justice."},
- {q:"Selon Rousseau, « le plus fort n'est jamais assez fort pour être toujours le maître, s'il ne transforme sa force en… »",o:["Richesse et l'obéissance en peur","Droit et l'obéissance en devoir","Ruse et l'obéissance en habitude","Loi et l'obéissance en vertu"],a:1,e:"Contrat social I, 3 : la force est une puissance physique ; elle ne crée aucun droit. « Céder à la force est un acte de nécessité, non de volonté. »"},
- {q:"L'expression « nous rendre comme maîtres et possesseurs de la nature » vient de :",o:["Bacon, Novum Organum","Descartes, Discours de la méthode","Rousseau, Émile","Jonas, Le Principe responsabilité"],a:1,e:"Descartes, Discours de la méthode, VI (1637) : la science doit devenir « pratique » et utile, notamment pour la médecine. Le « comme » est important."},
- {q:"Chez Aristote, la justice distributive repose sur :",o:["L'égalité arithmétique : tous reçoivent la même chose","L'égalité géométrique : chacun reçoit proportionnellement à son mérite","Le tirage au sort","La loi du plus fort"],a:1,e:"Éthique à Nicomaque V. La justice corrective (ou commutative), elle, applique une égalité arithmétique dans les échanges et réparations."},
- {q:"Pour Aristote, l'équité est :",o:["Le contraire de la justice","Une correction de la loi là où elle est défaillante à cause de sa généralité","L'égalité stricte entre tous","Une vertu propre aux juges professionnels"],a:1,e:"La loi est générale et ne peut prévoir tous les cas ; l'équitable adapte la règle au cas particulier. L'équité est « meilleure qu'une certaine justice »."},
- {q:"Dans le Gorgias de Platon, Calliclès soutient que :",o:["La justice consiste à obéir aux lois","Selon la nature, il est juste que le plus fort ait plus que le plus faible","La justice est l'harmonie de l'âme","Il vaut mieux subir l'injustice que la commettre"],a:1,e:"Pour Calliclès, les lois sont inventées par les faibles pour se protéger ; la « justice selon la nature » est la domination du plus fort. Socrate, lui, défend la dernière proposition."},
- {q:"Chez Rousseau, la pitié est :",o:["Une vertu acquise par l'éducation","Une répugnance naturelle à voir souffrir tout être sensible, surtout nos semblables","Une faiblesse à combattre","Un calcul d'intérêt"],a:1,e:"Discours sur l'origine de l'inégalité : la pitié, antérieure à la raison, « tient lieu de lois, de mœurs et de vertu » dans l'état de nature."},
- {q:"La « loi de Hume » affirme que :",o:["Les lois doivent être votées par tous","On ne peut pas déduire ce qui doit être de ce qui est","La nature est toujours bonne","La justice est une vertu naturelle"],a:1,e:"Traité de la nature humaine : on ne passe pas logiquement d'un constat (« est ») à une norme (« doit »). Argument décisif contre l'idée qu'il suffirait de « suivre la nature »."},
- {q:"Le « voile d'ignorance » est un dispositif imaginé par :",o:["Rawls","Hobbes","Marx","Platon"],a:0,e:"Rawls, Théorie de la justice (1971) : on choisit les principes de justice sans savoir quelle place on occupera dans la société, ce qui garantit leur impartialité."},
- {q:"« Chacun appelle barbarie ce qui n'est pas de son usage. » Cette phrase est de :",o:["Montaigne, Des cannibales","Lévi-Strauss, Race et histoire","Pascal, Pensées","Diderot, Supplément au voyage de Bougainville"],a:0,e:"Montaigne, Essais I, 31. Ce que nous jugeons « naturel » ou « contre-nature » dépend souvent de nos coutumes."},
- {q:"Selon Merleau-Ponty :",o:["On peut séparer chez l'homme une couche naturelle et une couche culturelle","Tout est naturel chez l'homme","Il est impossible de superposer chez l'homme des comportements naturels et un monde culturel fabriqué","La culture détruit la nature humaine"],a:2,e:"Phénoménologie de la perception : chez l'homme, « tout est fabriqué et tout est naturel ». Il n'existe pas de nature humaine « pure » à retrouver sous la culture."},
- {q:"L'« insociable sociabilité » est un concept de :",o:["Hobbes","Kant","Rousseau","Hegel"],a:1,e:"Kant, Idée d'une histoire universelle (1784) : la nature se sert de l'antagonisme entre les hommes pour développer leurs dispositions et les conduire vers une société de droit."},
- {q:"Dans la République de Platon, la justice dans l'âme consiste :",o:["À obéir aux plus forts","À ce que chaque partie de l'âme remplisse sa fonction propre, sous la direction de la raison","À satisfaire tous ses désirs","À rendre à chacun ce qu'on lui doit en argent"],a:1,e:"La justice est une harmonie : raison, cœur (thumos) et désirs à leur place, comme dans la cité juste chaque classe accomplit sa tâche."},
- {q:"La maxime « vivre conformément à la nature » est celle des :",o:["Épicuriens","Sceptiques","Stoïciens","Sophistes"],a:2,e:"Pour les stoïciens (Zénon, Épictète, Marc Aurèle), la nature est un ordre rationnel (logos) : vivre selon la nature, c'est vivre selon la raison."},
- {q:"Hans Jonas, dans Le Principe responsabilité (1979), défend l'idée que :",o:["La technique doit dominer la nature sans limite","Nous avons une responsabilité envers la nature et les générations futures","La nature n'a aucune valeur","Seul l'individu présent compte moralement"],a:1,e:"Face à la puissance de la technique moderne : « Agis de façon que les effets de ton action soient compatibles avec la permanence d'une vie authentiquement humaine sur terre. »"}
-];
-
-const ETUDES = [
-{id:"pascal",titre:"Pascal — La justice et la coutume",auteur:"Pascal, Pensées (fragment « Sur quoi la fondera-t-il… », éd. Brunschvicg 294)",
-texte:`On ne voit presque rien de juste ou d'injuste qui ne change de qualité en changeant de climat. Trois degrés d'élévation du pôle renversent toute la jurisprudence ; un méridien décide de la vérité ; en peu d'années de possession, les lois fondamentales changent ; le droit a ses époques. Plaisante justice qu'une rivière borne ! Vérité au-deçà des Pyrénées, erreur au-delà.
-
-Ils confessent que la justice n'est pas dans ces coutumes, mais qu'elle réside dans les lois naturelles, connues en tout pays. Certainement ils la soutiendraient opiniâtrement, si la témérité du hasard qui a semé les lois humaines en avait rencontré au moins une qui fût universelle ; mais la plaisanterie est telle, que le caprice des hommes s'est si bien diversifié, qu'il n'y en a point. […]
-
-Il y a sans doute des lois naturelles ; mais cette belle raison corrompue a tout corrompu.`,
-qs:[
- {q:"Quelle est la thèse de ce texte ?",ind:"Regarde ce que Pascal dit de la rivière et des Pyrénées : que devient le juste quand on change de pays ?",ref:"Autrement dit : pour Pascal, la justice des hommes est-elle la même partout ? De quoi dépend-elle ?",
-  el:[{l:"La justice humaine est relative, elle varie",k:["relativ","varie","change","divers","differ","pas la meme"],p:2},{l:"Elle dépend du lieu, de la coutume, du hasard",k:["coutume","lieu","pays","climat","frontiere","hasard","geograph","usage"],p:2},{l:"Aucune loi humaine n'est universelle",k:["universel","partout","aucune loi"],p:1}],
-  mod:"Pascal soutient que la justice humaine est relative : ce qui est juste ici est injuste ailleurs. Les lois dépendent de la coutume et du hasard (climat, frontière, époque) et non d'une justice vraie et universelle."},
- {q:"Expliquez la formule « Plaisante justice qu'une rivière borne ! »",ind:"« Plaisante » ne veut pas dire agréable ici. Qu'est-ce qu'une rivière a à voir avec le juste ?",ref:"Pourquoi est-il absurde qu'une simple frontière naturelle décide de ce qui est juste ?",
-  el:[{l:"Ton ironique (plaisante = risible, ridicule)",k:["ironi","moque","ridicule","risible","absurde","derisoire"],p:2},{l:"La frontière est arbitraire : un accident géographique",k:["frontiere","arbitraire","hasard","accident","geograph","limite"],p:2},{l:"Une vraie justice devrait être universelle",k:["universel","partout","absolu","vraie justice","valable pour tous"],p:1}],
-  mod:"La formule est ironique : une justice digne de ce nom devrait valoir partout, or elle s'arrête à une rivière, c'est-à-dire à une frontière arbitraire, fruit du hasard géographique. C'est donc une justice dérisoire."},
- {q:"Quelle objection Pascal envisage-t-il, et comment y répond-il ?",ind:"Qui sont « ils » ? Où placent-ils la vraie justice, sinon dans les coutumes ?",ref:"Certains disent que la justice se trouve dans des lois naturelles. Pascal accepte-t-il cette idée ? Pourquoi ne peut-on pas les connaître ?",
-  el:[{l:"Objection : la justice résiderait dans des lois naturelles universelles",k:["loi naturelle","lois naturelles","droit naturel","nature"],p:2},{l:"Réponse : en fait, aucune loi n'est universelle",k:["aucune","point","pas une","diversifi","caprice","universel"],p:1.5},{l:"La raison humaine est corrompue et ne peut les connaître",k:["corromp","peche","chute","raison"],p:1.5}],
-  mod:"Les partisans du droit naturel répondent que la vraie justice est dans des lois naturelles connues partout. Pascal répond que les faits démentent cela : le caprice humain a tellement diversifié les lois qu'aucune n'est universelle. Il admet qu'il existe des lois naturelles, mais notre raison, corrompue (depuis le péché originel), ne peut plus les atteindre."},
- {q:"Discussion : une justice universelle est-elle malgré tout possible ?",ind:"Pense aux Droits de l'homme, à Antigone, à Kant ou Rawls, à la distinction entre les lois et les principes.",ref:"Peut-on défendre l'idée de principes de justice valables pour tous les hommes, malgré la diversité des lois ?",
-  el:[{l:"Universalité des droits de l'homme / dignité",k:["droits de l'homme","declaration","dignite","droits humains","crime contre l'humanite"],p:1.5},{l:"Rôle de la raison (Kant, Rawls…)",k:["raison","kant","rawls","impartial","voile"],p:1},{l:"Distinguer diversité des lois et unité des principes",k:["principe","application","diversite des lois","fond commun","meme principe"],p:1},{l:"Mobilisation d'un auteur ou d'un exemple",k:["aristote","antigone","sophocle","rousseau","montesquieu","ciceron","platon","stoic","nuremberg"],p:1.5}],
-  mod:"On peut nuancer Pascal : la diversité des lois n'empêche pas l'existence de principes communs (ne pas tuer l'innocent, respecter la dignité). La raison permet de les formuler (Kant, Rawls et son voile d'ignorance), et les Droits de l'homme ou les procès de Nuremberg montrent qu'on juge des lois positives au nom d'une justice supérieure, comme Antigone."}
-]},
-{id:"rousseau-cs",titre:"Rousseau — De l'état de nature à l'état civil",auteur:"Rousseau, Du contrat social, I, 8 (1762)",
-texte:`Ce passage de l'état de nature à l'état civil produit dans l'homme un changement très remarquable, en substituant dans sa conduite la justice à l'instinct, et donnant à ses actions la moralité qui leur manquait auparavant. C'est alors seulement que la voix du devoir succédant à l'impulsion physique et le droit à l'appétit, l'homme, qui jusque-là n'avait regardé que lui-même, se voit forcé d'agir sur d'autres principes, et de consulter sa raison avant d'écouter ses penchants. Quoiqu'il se prive dans cet état de plusieurs avantages qu'il tient de la nature, il en regagne de si grands, ses facultés s'exercent et se développent, ses idées s'étendent, ses sentiments s'ennoblissent, son âme tout entière s'élève à tel point, que si les abus de cette nouvelle condition ne le dégradaient souvent au-dessous de celle dont il est sorti, il devrait bénir sans cesse l'instant heureux qui l'en arracha pour jamais, et qui, d'un animal stupide et borné, fit un être intelligent et un homme.`,
-qs:[
- {q:"Quelle est la thèse du texte ?",ind:"Repère les couples d'opposés : justice / instinct, devoir / impulsion, droit / appétit.",ref:"Qu'est-ce qui change en l'homme quand il quitte l'état de nature pour vivre dans une société organisée ?",
-  el:[{l:"Le passage à l'état civil transforme l'homme moralement",k:["moral","moralite","transform","changement"],p:2},{l:"La justice remplace l'instinct (le devoir remplace l'impulsion)",k:["justice","instinct","devoir","impulsion"],p:2},{l:"L'homme devient un être intelligent, véritablement humain",k:["intelligent","devient un homme","humain","eleve","s'eleve"],p:1}],
-  mod:"Rousseau soutient que le passage de l'état de nature à l'état civil fait de l'homme un être moral : la justice remplace l'instinct, le devoir l'impulsion, le droit l'appétit. C'est la vie civile qui fait d'un « animal stupide et borné » un être intelligent et un homme."},
- {q:"Que perd l'homme et que gagne-t-il dans ce passage ?",ind:"Lis la phrase qui commence par « Quoiqu'il se prive… ».",ref:"Fais deux colonnes : pertes / gains. Que dit Rousseau des facultés, des idées, des sentiments ?",
-  el:[{l:"Il perd certains avantages naturels (liberté naturelle, indépendance)",k:["avantage","liberte naturelle","perd","prive","independ"],p:2},{l:"Il gagne : facultés développées, idées étendues, sentiments ennoblis",k:["facult","idee","sentiment","developp","ennobl","ame"],p:2},{l:"Réserve : les abus de l'état civil peuvent le dégrader",k:["abus","degrad","au-dessous","reserve","corrupt"],p:1}],
-  mod:"L'homme perd des avantages naturels (sa liberté naturelle, son indépendance). Mais il gagne beaucoup plus : ses facultés se développent, ses idées s'étendent, ses sentiments s'ennoblissent. Rousseau ajoute une réserve : les abus de la société mal faite peuvent le dégrader plus bas qu'il n'était."},
- {q:"Expliquez : « consulter sa raison avant d'écouter ses penchants ».",ind:"Un penchant, c'est une inclination naturelle, un désir. Qu'est-ce qui commande dans l'état de nature ? et dans l'état civil ?",ref:"Pourquoi le fait de faire passer la raison avant le désir rend-il l'homme moral (et libre) ?",
-  el:[{l:"Primauté de la raison",k:["raison","reflech","rationnel"],p:1.5},{l:"Les penchants = désirs, instinct, inclinations",k:["penchant","desir","instinct","appetit","passion","inclination"],p:1.5},{l:"C'est la condition de la moralité, du devoir, de la liberté morale",k:["devoir","autonom","moral","liberte morale","obeissance a la loi"],p:2}],
-  mod:"Dans l'état de nature, l'homme suit ses penchants (désirs, instinct). Dans l'état civil, il doit d'abord se demander ce qui est juste : la raison passe avant le désir. C'est la définition de la moralité, et même de la liberté morale chez Rousseau : « l'obéissance à la loi qu'on s'est prescrite est liberté »."},
- {q:"Discussion : la société rend-elle l'homme meilleur ?",ind:"Rousseau lui-même, dans le Discours sur l'inégalité, dit que la société corrompt. Pense aussi à Hobbes et Aristote.",ref:"Peut-on dire à la fois que la société corrompt l'homme et qu'elle le rend moral ? À quelle condition ?",
-  el:[{l:"Rousseau, Discours sur l'inégalité : la société corrompt",k:["discours","inegalite","corromp","deprav","propriete"],p:1.5},{l:"Hobbes : sans État, guerre de tous contre tous",k:["hobbes","guerre","leviathan"],p:1},{l:"Aristote : l'homme est un animal politique",k:["aristote","animal politique"],p:1},{l:"Condition : une société juste, fondée sur un contrat légitime",k:["contrat","legitim","juste","volonte generale","institution"],p:1.5}],
-  mod:"Ce n'est pas « la société » en général qui rend meilleur : dans le Discours sur l'inégalité, Rousseau montre que la société fondée sur la propriété et l'inégalité corrompt l'homme. Seule une société juste, fondée sur un contrat légitime et la volonté générale, le rend moral. Hobbes et Aristote vont dans le même sens : hors de la cité, l'homme ne réalise pas son humanité."}
-]},
-{id:"rousseau-emile",titre:"Rousseau — L'homme qui défigure la nature",auteur:"Rousseau, Émile ou De l'éducation, livre I (1762)",
-texte:`Tout est bien sortant des mains de l'Auteur des choses, tout dégénère entre les mains de l'homme. Il force une terre à nourrir les productions d'une autre, un arbre à porter les fruits d'un autre ; il mêle et confond les climats, les éléments, les saisons ; il mutile son chien, son cheval, son esclave ; il bouleverse tout, il défigure tout, il aime la difformité, les monstres ; il ne veut rien tel que l'a fait la nature, pas même l'homme ; il le faut dresser pour lui, comme un cheval de manège ; il le faut contourner à sa mode, comme un arbre de son jardin.
-
-Sans cela, tout irait plus mal encore, et notre espèce ne veut pas être façonnée à demi. Dans l'état où sont désormais les choses, un homme abandonné dès sa naissance à lui-même parmi les autres serait le plus défiguré de tous. Les préjugés, l'autorité, la nécessité, l'exemple, toutes les institutions sociales dans lesquelles nous nous trouvons submergés, étoufferaient en lui la nature, et ne mettraient rien à la place.`,
-qs:[
- {q:"Quelle est la thèse de la première phrase, et de quoi va parler le texte ?",ind:"Compare « sortant des mains de l'Auteur des choses » et « entre les mains de l'homme ».",ref:"Pour Rousseau, la nature est-elle bonne ? Que fait l'homme de ce qui est naturel ?",
-  el:[{l:"La nature (œuvre de Dieu) est bonne",k:["nature est bonne","bon","tout est bien","bien","dieu","createur"],p:2},{l:"L'homme dénature, fait dégénérer, défigure",k:["degener","denatur","defigur","deform","corromp","pervert"],p:2},{l:"Le texte annonce une réflexion sur l'éducation",k:["education","eduquer","enfant","faconn"],p:1}],
-  mod:"La nature, sortie des mains de Dieu, est bonne ; l'homme la fait dégénérer. Le texte, qui ouvre un traité d'éducation, pose la question : comment former l'homme sans le dénaturer ?"},
- {q:"Analysez les exemples de la première partie : que reproche Rousseau à l'homme ?",ind:"Classe les exemples : végétaux, saisons, animaux, humains. Que montre le passage du chien à l'esclave puis à l'homme ?",ref:"Quel est le point commun de toutes ces actions ? Pourquoi la comparaison avec le cheval de manège et l'arbre de jardin est-elle forte ?",
-  el:[{l:"Énumération progressive : plantes, climats, animaux, esclave, homme",k:["enumer","gradation","arbre","chien","cheval","esclave","climat"],p:1.5},{l:"L'homme force, domine, violente la nature",k:["force","domin","maitris","violen","contraint","bouleverse"],p:2},{l:"Il traite même l'homme comme une chose à dresser",k:["dresse","manege","objet","homme lui-meme","pas meme l'homme","faconn"],p:1.5}],
-  mod:"Rousseau procède par gradation : l'homme force les plantes, mêle les saisons, mutile les animaux, puis l'esclave, et enfin l'homme lui-même. Toutes ces actions ont un point commun : imposer sa volonté et ses goûts à la nature par la force. L'éducation ordinaire « dresse » l'enfant comme un cheval de manège : elle le traite en objet."},
- {q:"Pourquoi Rousseau écrit-il : « Sans cela, tout irait plus mal encore » ? N'est-ce pas une contradiction ?",ind:"Lis la fin du texte : que deviendrait un enfant laissé à lui-même au milieu de la société actuelle ?",ref:"Rousseau critique l'intervention humaine, puis dit qu'elle est nécessaire. Comment réconcilier les deux ?",
-  el:[{l:"Paradoxe apparent",k:["paradox","contradict","apparent"],p:1},{l:"Dans la société actuelle, un enfant sans éducation serait défiguré par les préjugés et les institutions",k:["prejuge","institution","societe","defigur","etouff","exemple","autorite"],p:2},{l:"Il faut donc une éducation qui protège la nature (éducation naturelle)",k:["education","proteger","preserv","naturelle","negative","bonne education"],p:2}],
-  mod:"Le paradoxe n'est qu'apparent. La nature ne peut plus se développer seule : un enfant abandonné au milieu de la société serait étouffé par les préjugés, l'autorité, l'exemple. Il faut donc une éducation, mais une éducation qui protège la nature au lieu de la déformer : c'est le projet de l'Émile (éducation « naturelle » ou « négative »)."},
- {q:"Discussion : faut-il suivre la nature ?",ind:"Pense aux stoïciens, à Descartes (maîtres et possesseurs), à Merleau-Ponty, à Hume (être / devoir-être), à l'écologie (Jonas).",ref:"La nature peut-elle servir de modèle pour savoir comment agir ? Quels arguments pour, quels arguments contre ?",
-  el:[{l:"Oui : stoïciens, vivre conformément à la nature / écologie",k:["stoic","conformement","jonas","ecolog","environnement","respect"],p:1.5},{l:"Non : la technique libère de la nature (Descartes)",k:["descartes","technique","maitre","possesseur","science"],p:1},{l:"Pas de nature humaine pure (Merleau-Ponty, culture)",k:["merleau","culture","pas de nature","fabrique"],p:1.5},{l:"Hume : on ne tire pas un devoir d'un fait",k:["hume","doit etre","devoir-etre","fait","sophisme"],p:1}],
-  mod:"Suivre la nature peut sembler sage (stoïciens, écologie de Jonas). Mais la nature n'est pas une norme : de ce qui est, on ne peut déduire ce qui doit être (Hume) ; la nature est aussi violence et inégalité ; et l'homme a besoin de la technique pour vivre (Descartes). Enfin, chez l'homme, nature et culture sont indissociables (Merleau-Ponty)."}
-]},
-{id:"montesquieu",titre:"Montesquieu — La justice éternelle",auteur:"Montesquieu, Lettres persanes, lettre 83 (1721), Usbek à Rhédi",
-texte:`La justice est un rapport de convenance, qui se trouve réellement entre deux choses ; ce rapport est toujours le même, quelque être qui le considère, soit que ce soit Dieu, soit que ce soit un ange, ou enfin que ce soit un homme.
-
-Il est vrai que les hommes ne voient pas toujours ces rapports ; souvent même, lorsqu'ils les voient, ils s'en éloignent ; et leur intérêt est toujours ce qu'ils voient le mieux. La justice élève sa voix ; mais elle a peine à se faire entendre dans le tumulte des passions.
-
-Les hommes peuvent faire des injustices, parce qu'ils ont intérêt de les commettre, et qu'ils préfèrent leur propre satisfaction à celle des autres. C'est toujours par un retour sur eux-mêmes qu'ils agissent : nul n'est mauvais gratuitement ; il faut qu'il y ait une raison qui détermine, et cette raison est toujours une raison d'intérêt. […]
-
-Ainsi, quand il n'y aurait pas de Dieu, nous devrions toujours aimer la justice ; c'est-à-dire faire nos efforts pour ressembler à cet être dont nous avons une si belle idée, et qui, s'il existait, serait nécessairement juste. Libres que nous serions du joug de la religion, nous ne devrions pas l'être de celui de l'équité.`,
-qs:[
- {q:"Comment Montesquieu définit-il la justice ? Quelle est sa thèse ?",ind:"Relis la première phrase : « un rapport de convenance… toujours le même, quelque être qui le considère ».",ref:"Pour Montesquieu, la justice dépend-elle de celui qui juge (Dieu, ange, homme) ? Est-elle subjective ou objective ?",
-  el:[{l:"La justice est un rapport objectif (rapport de convenance)",k:["rapport","convenance","objecti","reel"],p:2},{l:"Elle est la même pour tous les êtres : universelle, éternelle",k:["meme","universel","eternel","immuable","dieu","ange"],p:2},{l:"Elle ne dépend ni de la volonté ni de la coutume",k:["independ","ne depend","volonte","coutume","convention"],p:1}],
-  mod:"La justice est un « rapport de convenance » réel entre les choses : elle est objective, la même pour Dieu, un ange ou un homme. Elle ne dépend donc ni de la volonté de celui qui juge, ni des coutumes : elle est universelle et éternelle."},
- {q:"Si la justice est universelle, pourquoi les hommes commettent-ils des injustices ?",ind:"Deux mots-clés dans les §2 et 3 : « intérêt » et « passions ».",ref:"Selon Montesquieu, les hommes ignorent-ils la justice, ou bien la connaissent-ils et s'en détournent-ils ? Pour quelle raison ?",
-  el:[{l:"Par intérêt personnel",k:["interet","egois","satisfaction"],p:2},{l:"Les passions couvrent la voix de la justice",k:["passion","tumulte","desir"],p:2},{l:"Nul n'est mauvais gratuitement : l'injustice a toujours une raison",k:["gratuit","raison","motif","cause"],p:1}],
-  mod:"Les hommes ne voient pas toujours la justice, ou s'en écartent quand ils la voient : leur intérêt et le tumulte de leurs passions étouffent sa voix. Personne n'est méchant gratuitement : l'injustice s'explique toujours par un intérêt."},
- {q:"Expliquez la dernière phrase : « quand il n'y aurait pas de Dieu, nous devrions toujours aimer la justice ».",ind:"« Joug » = obligation. Quelle obligation pourrait disparaître, laquelle resterait ?",ref:"Même si on n'était pas croyant, aurait-on encore une raison d'être juste ? Pourquoi ?",
-  el:[{l:"La justice ne dépend pas de la religion ni de Dieu",k:["independ","sans dieu","religion","athee","ne depend"],p:2},{l:"L'obligation d'équité demeure (le « joug » de l'équité)",k:["equite","joug","obligation","devoir"],p:1.5},{l:"Fondement rationnel / humain de la morale (Lumières)",k:["raison","laic","lumieres","humain","rationnel"],p:1.5}],
-  mod:"La justice n'est pas juste parce que Dieu la veut : elle vaut par elle-même. Même sans religion, nous resterions soumis au « joug » de l'équité. C'est une idée des Lumières : la morale a un fondement rationnel, indépendant de la foi."},
- {q:"Discussion : la justice est-elle universelle ou relative ?",ind:"Confronte Montesquieu à Pascal (« plaisante justice ») et aux sophistes (Calliclès, Thrasymaque). Pense aussi à Platon.",ref:"Qui pense que la justice est une convention ou l'intérêt du plus fort ? Qui pense qu'elle existe en soi ?",
-  el:[{l:"Pascal : la justice humaine dépend de la coutume",k:["pascal","coutume","riviere"],p:2},{l:"Sophistes : la justice comme convention ou droit du plus fort",k:["callicles","thrasymaque","sophist","plus fort","convention"],p:1.5},{l:"Platon : la justice existe en soi (Idée)",k:["platon","idee","en soi","bien","republique"],p:1.5}],
-  mod:"Contre Montesquieu, Pascal montre que les lois varient selon les lieux, et les sophistes (Calliclès, Thrasymaque) réduisent la justice à une convention ou à l'intérêt du plus fort. Mais, comme Platon, Montesquieu distingue la justice elle-même de nos lois : leur diversité prouve seulement que nos passions nous en détournent, non qu'elle n'existe pas."}
-]}
-];
-
-/* ========================= UTILITAIRES ========================= */
-const $ = s => document.querySelector(s);
-const norm = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’`]/g,"'");
-const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const fmt = n => (Math.round(n*10)/10).toString().replace(".",",");
-const store = { get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}} };
-const SALT="philo-nature-justice-2026";
-function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
-const LABELS={qcm:"QCM"}; ETUDES.forEach(e=>LABELS["etude-"+e.id]=e.titre.split(" — ")[0]+" — "+e.titre.split(" — ")[1]);
-const COLS=["qcm",...ETUDES.map(e=>"etude-"+e.id)];
-const SHORT={qcm:"QCM","etude-pascal":"Pascal","etude-rousseau-cs":"Rousseau CS","etude-rousseau-emile":"Rousseau Émile","etude-montesquieu":"Montesquieu"};
-
-/* ========================= PSEUDO ========================= */
-const pseudoIn=$("#pseudo"); pseudoIn.value=store.get("pseudo","");
-let pseudoT; pseudoIn.addEventListener("input",()=>{clearTimeout(pseudoT);pseudoT=setTimeout(()=>{store.set("pseudo",pseudoIn.value.trim());$("#pseudoOk").textContent=pseudoIn.value.trim()?"✓ enregistré":"";},400)});
-function pseudo(){return (pseudoIn.value||"").trim()||"Anonyme"}
-
-/* ========================= ENREGISTREMENT ========================= */
-let canSave=false, myDoc=null;
-const myLocal = store.get("myResults",{});
-$("#saveInfo").innerHTML='<span class="note">À la fin de chaque épreuve, un <b>code de résultat</b> s\'affiche : envoie-le à Kendji (bouton WhatsApp ou Copier) pour qu\'il voie ta note.</span>';
-
-async function saveResult(kind,score,max){
-  const at=Date.now();
-  const prev=myLocal[kind];
-  myLocal[kind]={s:score,m:max,at,best:Math.max(score,prev?prev.best??prev.s:-99),n:(prev?prev.n||1:0)+1};
-  store.set("myResults",myLocal);
-  const code=makeCode(kind,score,max,at);
-  let saved=false;
-  if(canSave && myDoc){
-    try{
-      const snap=await myDoc.get();
-      const cur=snap.exists?JSON.parse(JSON.stringify(snap.data())):{results:{}};
-      cur.pseudo=pseudo(); cur.updatedAt=at; cur.results=cur.results||{};
-      const old=cur.results[kind];
-      cur.results[kind]={s:score,m:max,at,best:Math.max(score,old?old.best??old.s:-99),n:(old?old.n||1:0)+1};
-      await myDoc.set(cur); saved=true;
-    }catch(e){ if(e&&e.code==="invalid_argument"){canSave=false;setSaveInfo()} }
+/* SHA-256 synchrone (pour garder l'ouverture du nouvel onglet dans le clic) */
+function sha256(s){
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const b=Array.from(new TextEncoder().encode(s)), l=b.length*8;
+  b.push(0x80); while(b.length%64!==56) b.push(0);
+  for(let i=7;i>=0;i--) b.push(Math.floor(l/2**(i*8))&255);
+  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const r=(x,n)=>(x>>>n)|(x<<(32-n));
+  for(let o=0;o<b.length;o+=64){
+    const w=new Array(64);
+    for(let i=0;i<16;i++) w[i]=(b[o+4*i]<<24)|(b[o+4*i+1]<<16)|(b[o+4*i+2]<<8)|b[o+4*i+3];
+    for(let i=16;i<64;i++){const s0=r(w[i-15],7)^r(w[i-15],18)^(w[i-15]>>>3), s1=r(w[i-2],17)^r(w[i-2],19)^(w[i-2]>>>10); w[i]=(w[i-16]+s0+w[i-7]+s1)|0;}
+    let [a,c,d,e,f,g,h,k]=H; // a,b,c,d,e,f,g,h
+    for(let i=0;i<64;i++){
+      const S1=r(f,6)^r(f,11)^r(f,25), ch=(f&g)^(~f&h), t1=(k+S1+ch+K[i]+w[i])|0;
+      const S0=r(a,2)^r(a,13)^r(a,22), mj=(a&c)^(a&d)^(c&d), t2=(S0+mj)|0;
+      k=h; h=g; g=f; f=(e+t1)|0; e=d; d=c; c=a; a=(t1+t2)|0;
+    }
+    H=[(H[0]+a)|0,(H[1]+c)|0,(H[2]+d)|0,(H[3]+e)|0,(H[4]+f)|0,(H[5]+g)|0,(H[6]+h)|0,(H[7]+k)|0];
   }
-  return {saved,code};
+  return H.map(x=>(x>>>0).toString(16).padStart(8,"0")).join("");
 }
-function makeCode(kind,s,m,at){
-  const p={p:pseudo(),k:kind,s,m,t:at}; const raw=JSON.stringify(p);
-  p.h=hash(raw+SALT);
-  return "PHILO-"+btoa(unescape(encodeURIComponent(JSON.stringify(p)))).replace(/=+$/,"");
-}
-function readCode(c){
-  try{
-    const b=c.replace(/^PHILO-/,""); const p=JSON.parse(decodeURIComponent(escape(atob(b))));
-    const h=p.h; delete p.h; const ok=hash(JSON.stringify({p:p.p,k:p.k,s:p.s,m:p.m,t:p.t})+SALT)===h;
-    return ok?p:null;
-  }catch(e){return null}
-}
-function resultBox(title,score,max,res){
-  const note20 = max? Math.max(0,score)/max*20 : 0;
-  const msg=`Philo nature & justice — ${pseudo()} — ${title} : ${fmt(Math.max(0,score))}/${max}\n${res.code}`;
-  let h=`<h3 style="margin-top:0">${esc(title)} : <span class="big">${fmt(Math.max(0,score))} / ${max}</span></h3>`;
-  if(max!==20) h+=`<p class="note" style="margin-top:0">Soit ${fmt(note20)} / 20.</p>`;
-  if(res.saved) h+=`<p><span class="pill">✓ Enregistrée</span> <span class="note">Ta note apparaît sur le tableau de Kendji.</span></p>`;
-  else h+=`<p class="note">Envoie ce code à Kendji pour qu'il voie ta note :</p><div class="code">${esc(res.code)}</div>
-    <div class="row" style="margin-top:8px"><a class="btn sm" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Envoyer par WhatsApp</a><button class="btn alt sm" data-copy="${esc(msg)}">Copier</button><span class="note copied"></span></div>`;
-  return h;
-}
-document.addEventListener("click",async e=>{
-  const b=e.target.closest("[data-copy]"); if(!b) return;
-  try{await navigator.clipboard.writeText(b.getAttribute("data-copy"));b.parentElement.querySelector(".copied").textContent="Copié ✓"}catch(err){b.parentElement.querySelector(".copied").textContent="Sélectionne le code et copie-le à la main."}
-});
-
-/* ========================= QCM ========================= */
-let qState;
-function qInit(){
-  qState={ans:QCM.map(()=>null),score:0,done:false};
-  // ordre d'options mélangé une fois par session
-  qState.order=QCM.map(q=>{const idx=q.o.map((_,i)=>i);for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}return idx});
-  $("#qList").innerHTML=QCM.map((q,i)=>`<div class="card" id="q${i}"><div class="qhead"><span class="badge">${i+1}</span><span>${esc(q.q)}</span></div><div class="opts">${qState.order[i].map(k=>`<button class="opt" data-q="${i}" data-k="${k}">${esc(q.o[k])}</button>`).join("")}<button class="opt skip" data-q="${i}" data-k="-1">Je ne sais pas (0 point)</button></div><div class="expl hide"></div></div>`).join("");
-  $("#qEnd").classList.add("hide"); qUpd();
-}
-function qUpd(){const n=qState.ans.filter(a=>a!==null).length;$("#qScore").textContent=fmt(qState.score)+" / 20";$("#qProg").textContent=n+" / 20 répondues"}
-$("#qList").addEventListener("click",async e=>{
-  const b=e.target.closest(".opt"); if(!b||b.disabled) return;
-  const i=+b.dataset.q,k=+b.dataset.k,q=QCM[i]; if(qState.ans[i]!==null) return;
-  qState.ans[i]=k; const card=$("#q"+i);
-  card.querySelectorAll(".opt").forEach(o=>{o.disabled=true;const kk=+o.dataset.k;if(kk===q.a)o.classList.add("ok");if(kk===k&&k!==q.a&&k!==-1)o.classList.add("ko")});
-  let pts=0,lab; if(k===q.a){pts=1;lab="Bonne réponse : +1"}else if(k===-1){lab="Passée : 0"}else{pts=-0.5;lab="Erreur : −0,5"}
-  qState.score+=pts;
-  const ex=card.querySelector(".expl"); ex.innerHTML=`<b>${lab}.</b> ${esc(q.e)}`; ex.classList.remove("hide"); qUpd();
-  if(qState.ans.every(a=>a!==null)&&!qState.done){
-    qState.done=true;
-    const good=qState.ans.filter((a,j)=>a===QCM[j].a).length, bad=qState.ans.filter((a,j)=>a!==-1&&a!==QCM[j].a).length, skip=20-good-bad;
-    const res=await saveResult("qcm",qState.score,20);
-    const end=$("#qEnd"); end.innerHTML=resultBox("QCM",qState.score,20,res)+`<p class="note">${good} bonnes réponses, ${bad} erreurs, ${skip} passées.${qState.score<0?" Ton total brut est négatif ("+fmt(qState.score)+") : la note est ramenée à 0.":""}</p><button class="btn alt" onclick="qInit();scrollTo(0,0)">Refaire le QCM</button>`;
-    end.classList.remove("hide"); end.scrollIntoView({behavior:"smooth",block:"center"});
-  }
-});
-$("#qReset").onclick=()=>{qInit();scrollTo(0,0)};
-qInit();
-
-/* ========================= ÉTUDES ========================= */
-$("#eTiles").innerHTML=ETUDES.map(e=>`<a class="tile" href="#etude-${e.id}"><b>${esc(e.titre)}</b><p class="note" style="margin:6px 0 0">${esc(e.auteur)}</p></a>`).join("");
-const drafts=store.get("drafts",{});
-function renderEtude(id){
-  const e=ETUDES.find(x=>x.id===id); if(!e){$("#eBody").innerHTML="";$("#eTiles").classList.remove("hide");return}
-  $("#eTiles").classList.add("hide");
-  $("#eBody").innerHTML=`<p><a href="#etudes" class="btn alt sm">← Toutes les études</a></p><h2>${esc(e.titre)}</h2><div class="texte">${esc(e.texte)}</div><div class="src">${esc(e.auteur)}</div>
-  ${e.qs.map((q,i)=>`<div class="card"><div class="qhead"><span class="badge">${i+1}</span><span>${esc(q.q)}</span></div>
-   <div class="row" style="margin:10px 0"><button class="btn alt sm" data-t="ind${i}">💡 Indice</button><button class="btn alt sm" data-t="ref${i}">🔁 Reformuler la question</button></div>
-   <div class="help hide" id="ind${i}"><b>Indice :</b> ${esc(q.ind)}</div><div class="help hide" id="ref${i}"><b>Autrement dit :</b> ${esc(q.ref)}</div>
-   <textarea id="ans${i}" placeholder="Ta réponse…" style="margin-top:8px">${esc((drafts[id]||[])[i]||"")}</textarea><div id="cor${i}"></div></div>`).join("")}
-  <div class="row"><button class="btn" id="eGo">Corriger mon étude</button></div><div id="eRes" class="card hide"></div>`;
-  $("#eBody").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>$("#"+b.dataset.t).classList.toggle("hide"));
-  e.qs.forEach((_,i)=>$("#ans"+i).addEventListener("input",()=>{drafts[id]=e.qs.map((_,j)=>$("#ans"+j).value);store.set("drafts",drafts)}));
-  $("#eGo").onclick=async()=>{
-    let tot=0;
-    e.qs.forEach((q,i)=>{
-      const a=norm($("#ans"+i).value); let pts=0;
-      const lis=q.el.map(el=>{const hit=a.length>0&&el.k.some(k=>a.includes(norm(k)));if(hit)pts+=el.p;return `<li class="${hit?"y":"n"}">${hit?"✓":"✗"} ${esc(el.l)} <span class="note">(${fmt(el.p)} pt)</span></li>`}).join("");
-      tot+=pts;
-      $("#cor"+i).innerHTML=`<div style="margin-top:10px"><b>${fmt(pts)} / 5</b> — éléments attendus :<ul class="elts">${lis}</ul><div class="model"><b>Proposition de corrigé :</b> ${esc(q.mod)}</div></div>`;
-    });
-    const res=await saveResult("etude-"+id,tot,20);
-    const r=$("#eRes"); r.innerHTML=resultBox(e.titre,tot,20,res)+`<p class="note">La correction repère les idées et les mots-clés attendus. Si tu as exprimé une idée autrement, compare avec le corrigé et sois honnête avec toi-même.</p>`;
-    r.classList.remove("hide"); r.scrollIntoView({behavior:"smooth",block:"center"});
-  };
-}
-
-/* ========================= MES NOTES ========================= */
-function renderMine(){
-  const rows=COLS.filter(k=>myLocal[k]).map(k=>{const r=myLocal[k];return `<tr><td>${esc(LABELS[k])}</td><td><b>${fmt(Math.max(0,r.s))} / ${r.m}</b></td><td>${fmt(Math.max(0,r.best??r.s))} / ${r.m}</td><td>${r.n||1}</td><td class="note">${new Date(r.at).toLocaleString("fr-FR")}</td></tr>`}).join("");
-  $("#myNotes").innerHTML=rows?`<div class="card" style="overflow-x:auto"><table><tr><th>Épreuve</th><th>Dernière note</th><th>Meilleure</th><th>Essais</th><th>Date</th></tr>${rows}</table></div><p class="note">Notes gardées sur cet appareil.</p>`:`<div class="card"><span class="note">Aucune épreuve terminée pour l'instant. Commence par le <a href="#qcm">QCM</a>.</span></div>`;
-}
-
-/* ========================= TABLEAU (propriétaire) ========================= */
-let boardDocs=store.get("board",[]);
-function startBoard(){ boardDocs=store.get("board",[]); drawBoard(); }
-function drawBoard(){
-  if(!boardDocs.length){$("#board").innerHTML='<span class="note">Aucune note pour l\'instant.</span>';return}
-  const rows=boardDocs.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).map(d=>{
-    const r=d.results||{}; let sum=0,n=0;
-    const cells=COLS.map(k=>{const x=r[k];if(!x)return "<td class='note'>—</td>";const v=Math.max(0,x.s)/x.m*20;sum+=v;n++;return `<td><b>${fmt(Math.max(0,x.s))}</b>/${x.m}${x.n>1?` <span class="note">(${x.n} essais, max ${fmt(Math.max(0,x.best??x.s))})</span>`:""}</td>`}).join("");
-    return `<tr><td>${esc(String(d.pseudo||"Anonyme").slice(0,40))}${d.imported?' <span class="pill">code</span>':''}</td>${cells}<td><b>${n?fmt(sum/n):"—"}</b></td><td class="note">${d.updatedAt?new Date(d.updatedAt).toLocaleDateString("fr-FR"):""}</td></tr>`}).join("");
-  $("#board").innerHTML=`<table><tr><th>Élève</th>${COLS.map(k=>`<th>${SHORT[k]}</th>`).join("")}<th>Moyenne /20</th><th>Date</th></tr>${rows}</table>`;
-}
-$("#impBtn").onclick=()=>{
-  const codes=($("#impTxt").value.match(/PHILO-[A-Za-z0-9+/]+/g)||[]); let ok=0,bad=0;
-  boardDocs=store.get("board",[]);
-  for(const c of codes){
-    const p=readCode(c); if(!p||!COLS.includes(p.k)){bad++;continue}
-    const id="imp-"+hash(norm(p.p).trim());
-    let cur=boardDocs.find(d=>d.id===id); if(!cur){cur={id,pseudo:p.p,imported:true,results:{}};boardDocs.push(cur)}
-    const old=cur.results[p.k];
-    if(old&&old.at===p.t){ok++;continue}
-    cur.results[p.k]={s:p.s,m:p.m,at:p.t,best:Math.max(p.s,old?old.best??old.s:-99),n:(old?old.n||1:0)+1};
-    cur.updatedAt=Math.max(cur.updatedAt||0,p.t); ok++;
-  }
-  store.set("board",boardDocs); drawBoard();
-  $("#impMsg").textContent=`${ok} code(s) ajouté(s)${bad?`, ${bad} invalide(s)`:""}.`; if(ok) $("#impTxt").value="";
-};
-$("#clrBtn").onclick=()=>{ if($("#clrBtn").dataset.sure){store.set("board",[]);boardDocs=[];drawBoard();$("#clrBtn").textContent="Vider le tableau";delete $("#clrBtn").dataset.sure}else{$("#clrBtn").dataset.sure=1;$("#clrBtn").textContent="Confirmer : tout effacer ?"} };
-
-/* ========================= CONNEXION ========================= */
 const LOGIN_HASH="6b6e0f805c218c8e6aef8b2e3945f73d3facc3329b32287c51c517271649b0c8";
-async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
-function unlock(){$("#login").classList.add("hide");$("#app").classList.remove("hide");route()}
-try{ if(sessionStorage.getItem("ok")==="1"||localStorage.getItem("ok")==="1") unlock() }catch(e){}
-$("#loginForm").addEventListener("submit",async e=>{
+document.getElementById("loginForm").addEventListener("submit",function(e){
   e.preventDefault();
-  const h=await sha($("#lid").value.trim().toLowerCase()+":"+$("#lpw").value);
-  if(h===LOGIN_HASH){ try{sessionStorage.setItem("ok","1"); if($("#lrem").checked) localStorage.setItem("ok","1")}catch(err){} unlock() }
-  else { $("#lerr").textContent="Identifiant ou mot de passe incorrect."; $("#lpw").value=""; }
+  const id=document.getElementById("lid").value.trim().toLowerCase(), pw=document.getElementById("lpw").value;
+  if(sha256(id+":"+pw)!==LOGIN_HASH){ document.getElementById("lerr").textContent="Identifiant ou mot de passe incorrect."; document.getElementById("lpw").value=""; return; }
+  try{ localStorage.setItem("auth",JSON.stringify({ok:true,t:Date.now(),rem:document.getElementById("lrem").checked})); }catch(err){}
+  const w=window.open("revisions.html","_blank");
+  if(!w){ location.href="revisions.html"; return; }
+  document.getElementById("formFields").classList.add("hide");
+  document.getElementById("opened").classList.remove("hide");
 });
-
-/* ========================= ROUTAGE ========================= */
-function route(){
-  const h=(location.hash||"#accueil").slice(1);
-  let v=h.startsWith("etude-")?"etudes":h;
-  if(!["accueil","qcm","etudes","mes-notes","tableau"].includes(v)) v="accueil";
-  document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));
-  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
-  if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);
-  if(v==="mes-notes") renderMine();
-  if(v==="tableau") startBoard();
-  scrollTo(0,0);
-}
-addEventListener("hashchange",route);
 </script>
 </body>
 </html>
