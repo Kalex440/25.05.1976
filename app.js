@@ -248,6 +248,15 @@ function gate(v){
   return open;
 }
 
+/* ========================= STICKER « Nous y est » au début du premier module ========================= */
+function showSticker(){
+  const o=document.createElement("div"); o.className="sticker-wrap";
+  o.innerHTML=`<img class="sticker" src="gif/sticker_nous_y_est.png" alt="Nous y est" width="384" height="272">`;
+  document.body.appendChild(o);
+  const bye=()=>{ if(!o.isConnected) return; o.classList.add("bye"); setTimeout(()=>o.remove(),450); };
+  o.addEventListener("click",bye); setTimeout(bye,2800);
+}
+
 /* ========================= ROUTAGE ========================= */
 function route(){
   const h=(location.hash||"#accueil").slice(1);
@@ -267,6 +276,7 @@ function route(){
   if(v==="bac") renderBac(h.startsWith("bac-")?h.slice(4):null);
   if(v==="direct") renderDirect(h.startsWith("salon-")?h.slice(6).replace(/\D/g,""):null);
   if(v==="mes-notes") renderMine();
+  if(v==="qcm"&&qState&&!qState.sticker&&qState.ans.every(a=>a===null)){ qState.sticker=1; showSticker(); }
   scrollTo(0,0);
 }
 addEventListener("hashchange",route); addEventListener("DOMContentLoaded",route);
