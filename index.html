@@ -64,8 +64,9 @@ document.getElementById("loginForm").addEventListener("submit",function(e){
   const id=document.getElementById("lid").value.trim().toLowerCase(), pw=document.getElementById("lpw").value;
   if(sha256(id+":"+pw)!==LOGIN_HASH){ document.getElementById("lerr").textContent="Identifiant ou mot de passe incorrect."; document.getElementById("lpw").value=""; return; }
   try{ localStorage.setItem("auth",JSON.stringify({ok:true,t:Date.now(),rem:document.getElementById("lrem").checked})); }catch(err){}
-  const w=window.open("revisions.html","_blank");
-  if(!w){ location.href="revisions.html"; return; }
+  const dest="revisions.html"+location.hash, w=window.open(dest,"_blank");
+  if(!w){ location.href=dest; return; }
+  document.querySelector("#opened a").href=dest;
   document.getElementById("formFields").classList.add("hide");
   document.getElementById("opened").classList.remove("hide");
 });

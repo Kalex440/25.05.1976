@@ -2,7 +2,7 @@
 (function(){
   let ok=false;
   try{ const a=JSON.parse(localStorage.getItem("auth")||"null"); ok=!!(a&&a.ok&&(a.rem||Date.now()-a.t<12*3600e3)); }catch(e){}
-  if(!ok) location.replace("index.html");
+  if(!ok) location.replace("index.html"+location.hash);
 })();
 function logout(){ try{localStorage.removeItem("auth")}catch(e){} location.replace("index.html"); }
 
@@ -15,8 +15,9 @@ const store = { get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JS
 const SALT="philo-nature-justice-2026";
 function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
 const LABELS={qcm:"QCM"}; ETUDES.forEach(e=>LABELS["etude-"+e.id]=e.titre.split(" — ")[0]+" — "+e.titre.split(" — ")[1]);
-const COLS=["qcm",...ETUDES.map(e=>"etude-"+e.id)];
-const SHORT={qcm:"QCM","etude-pascal":"Pascal","etude-rousseau-cs":"Rousseau CS","etude-rousseau-emile":"Rousseau Émile","etude-montesquieu":"Montesquieu"};
+const COLS=["qcm",...ETUDES.map(e=>"etude-"+e.id),"trou-","carte-"];
+const validKind=k=>COLS.includes(k)||/^(trou|carte)-[a-z0-9]+$/.test(k);
+const SHORT={qcm:"QCM","etude-pascal":"Pascal","etude-rousseau-cs":"Rousseau CS","etude-rousseau-emile":"Rousseau Émile","etude-montesquieu":"Montesquieu","trou-":"Textes à trous (moy.)","carte-":"Cartes mentales (moy.)"};
 
 /* ========================= PSEUDO ========================= */
 const pseudoIn=$("#pseudo"); pseudoIn.value=store.get("pseudo","");
@@ -135,7 +136,7 @@ function renderEtude(id){
 
 /* ========================= MES NOTES ========================= */
 function renderMine(){
-  const rows=COLS.filter(k=>myLocal[k]).map(k=>{const r=myLocal[k];return `<tr><td>${esc(LABELS[k])}</td><td><b>${fmt(Math.max(0,r.s))} / ${r.m}</b></td><td>${fmt(Math.max(0,r.best??r.s))} / ${r.m}</td><td>${r.n||1}</td><td class="note">${new Date(r.at).toLocaleString("fr-FR")}</td></tr>`}).join("");
+  const rows=Object.keys(myLocal).filter(k=>LABELS[k]).sort((a,b)=>myLocal[b].at-myLocal[a].at).map(k=>{const r=myLocal[k];return `<tr><td>${esc(LABELS[k])}</td><td><b>${fmt(Math.max(0,r.s))} / ${r.m}</b></td><td>${fmt(Math.max(0,r.best??r.s))} / ${r.m}</td><td>${r.n||1}</td><td class="note">${new Date(r.at).toLocaleString("fr-FR")}</td></tr>`}).join("");
   $("#myNotes").innerHTML=rows?`<div class="card" style="overflow-x:auto"><table><tr><th>Épreuve</th><th>Dernière note</th><th>Meilleure</th><th>Essais</th><th>Date</th></tr>${rows}</table></div><p class="note">Notes gardées sur cet appareil.</p>`:`<div class="card"><span class="note">Aucune épreuve terminée pour l'instant. Commence par le <a href="#qcm">QCM</a>.</span></div>`;
 }
 
@@ -146,7 +147,9 @@ function drawBoard(){
   if(!boardDocs.length){$("#board").innerHTML='<span class="note">Aucune note pour l\'instant.</span>';return}
   const rows=boardDocs.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).map(d=>{
     const r=d.results||{}; let sum=0,n=0;
-    const cells=COLS.map(k=>{const x=r[k];if(!x)return "<td class='note'>—</td>";const v=Math.max(0,x.s)/x.m*20;sum+=v;n++;return `<td><b>${fmt(Math.max(0,x.s))}</b>/${x.m}${x.n>1?` <span class="note">(${x.n} essais, max ${fmt(Math.max(0,x.best??x.s))})</span>`:""}</td>`}).join("");
+    const cells=COLS.map(k=>{let x=r[k];
+      if(k.endsWith("-")){const ks=Object.keys(r).filter(z=>z.startsWith(k));if(!ks.length)return "<td class='note'>—</td>";const av=ks.reduce((t,z)=>t+Math.max(0,r[z].s)/r[z].m*20,0)/ks.length;sum+=av;n++;return `<td><b>${fmt(av)}</b>/20 <span class="note">(${ks.length} fait${ks.length>1?"s":""})</span></td>`}
+      if(!x)return "<td class='note'>—</td>";const v=Math.max(0,x.s)/x.m*20;sum+=v;n++;return `<td><b>${fmt(Math.max(0,x.s))}</b>/${x.m}${x.n>1?` <span class="note">(${x.n} essais, max ${fmt(Math.max(0,x.best??x.s))})</span>`:""}</td>`}).join("");
     return `<tr><td>${esc(String(d.pseudo||"Anonyme").slice(0,40))}${d.imported?' <span class="pill">code</span>':''}</td>${cells}<td><b>${n?fmt(sum/n):"—"}</b></td><td class="note">${d.updatedAt?new Date(d.updatedAt).toLocaleDateString("fr-FR"):""}</td></tr>`}).join("");
   $("#board").innerHTML=`<table><tr><th>Élève</th>${COLS.map(k=>`<th>${SHORT[k]}</th>`).join("")}<th>Moyenne /20</th><th>Date</th></tr>${rows}</table>`;
 }
@@ -154,7 +157,7 @@ $("#impBtn").onclick=()=>{
   const codes=($("#impTxt").value.match(/PHILO-[A-Za-z0-9+/]+/g)||[]); let ok=0,bad=0;
   boardDocs=store.get("board",[]);
   for(const c of codes){
-    const p=readCode(c); if(!p||!COLS.includes(p.k)){bad++;continue}
+    const p=readCode(c); if(!p||!validKind(p.k)){bad++;continue}
     const id="imp-"+hash(norm(p.p).trim());
     let cur=boardDocs.find(d=>d.id===id); if(!cur){cur={id,pseudo:p.p,imported:true,results:{}};boardDocs.push(cur)}
     const old=cur.results[p.k];
@@ -171,12 +174,17 @@ $("#clrBtn").onclick=()=>{ if($("#clrBtn").dataset.sure){store.set("board",[]);b
 function route(){
   const h=(location.hash||"#accueil").slice(1);
   let v=h.startsWith("etude-")?"etudes":h;
-  if(!["accueil","qcm","etudes","mes-notes","tableau"].includes(v)) v="accueil";
+  if(h.startsWith("trou-")) v="trous"; if(h.startsWith("carte-")) v="jardin"; if(h.startsWith("salon-")) v="direct";
+  if(!["accueil","qcm","etudes","trous","jardin","direct","mes-notes","tableau"].includes(v)) v="accueil";
+  if(v!=="jardin"&&typeof G!=="undefined"&&G&&G.timer){clearInterval(G.timer);G=null}
   document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));
   document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);
+  if(v==="trous") renderTrous(h.startsWith("trou-")?h.slice(5):null);
+  if(v==="jardin") renderJardin(h.startsWith("carte-")?h.slice(6):null);
+  if(v==="direct") renderDirect(h.startsWith("salon-")?h.slice(6).replace(/\D/g,""):null);
   if(v==="mes-notes") renderMine();
   if(v==="tableau") startBoard();
   scrollTo(0,0);
 }
-addEventListener("hashchange",route); route();
+addEventListener("hashchange",route); addEventListener("DOMContentLoaded",route);
