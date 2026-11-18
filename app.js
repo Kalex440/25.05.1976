@@ -137,7 +137,8 @@ $("#qList").addEventListener("click",async e=>{
   card.querySelectorAll(".opt").forEach(o=>{o.disabled=true;const kk=+o.dataset.k;if(kk===q.a)o.classList.add("ok");if(kk===k&&k!==q.a&&k!==-1)o.classList.add("ko")});
   let pts=0,lab; if(k===q.a){pts=1;lab="Bonne réponse : +1"}else if(k===-1){lab="Passée : 0"}else{pts=-0.5;lab="Erreur : −0,5"}
   qState.score+=pts;
-  const ex=card.querySelector(".expl"); ex.innerHTML=`<b>${lab}.</b> ${esc(q.e)}`; ex.classList.remove("hide"); qUpd();
+  const ex=card.querySelector(".expl"); const gif=k===-1?"":(k===q.a?["bravo1","bravo2"][Math.floor(Math.random()*2)]:"rate");
+  ex.innerHTML=(gif?`<img class="reac ${k===q.a?"good":"bad"}" src="gif/${gif}.gif?r=${Date.now()}" alt="${k===q.a?"Pépin fait la fête":"Pépin se cache dans la haie"}" width="240" height="180">`:"")+`<div><b>${lab}.</b> ${esc(q.e)}</div>`; ex.classList.add("withgif"); ex.classList.remove("hide"); qUpd();
   qLocks();
   if(qState.ans.every(a=>a!==null)&&!qState.done){
     qState.done=true;

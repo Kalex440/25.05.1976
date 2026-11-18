@@ -311,3 +311,9 @@ button.ans:disabled{cursor:default}
 .avgmods{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;flex:1}
 .avgmods>div{background:var(--blue-l);border-radius:12px;padding:8px 12px;display:flex;flex-direction:column}
 .avgmods b{font:600 20px "Fredoka",sans-serif;color:var(--navy)}
+
+/* ===== GIFs de Pépin dans le QCM ===== */
+.expl.withgif{display:flex;gap:14px;align-items:center}
+.reac{width:150px;height:auto;border-radius:12px;flex:none;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15);animation:grow .4s cubic-bezier(.2,1.6,.4,1)}
+.reac.good{border-color:var(--ok)}.reac.bad{border-color:#e5a300}
+@media (max-width:560px){.expl.withgif{flex-direction:column;align-items:flex-start}.reac{width:180px}}
