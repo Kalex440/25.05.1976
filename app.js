@@ -175,10 +175,13 @@ $("#clrBtn").onclick=()=>{ if($("#clrBtn").dataset.sure){store.set("board",[]);b
 
 /* ========================= PARCOURS : QCM → ÉTUDES → TEXTES À TROUS ========================= */
 const PASS=12;
+const GATE_FROM=Date.UTC(2026,10,18,16,0,0); // 18/11/2026 à 20h00, heure de La Réunion (UTC+4)
+const gateOn=()=>Date.now()>=GATE_FROM;
 const bestOf=k=>myLocal[k]?Math.max(myLocal[k].best??myLocal[k].s,myLocal[k].s):-1;
 const bestEtude=()=>Math.max(-1,...ETUDES.map(e=>bestOf("etude-"+e.id)));
-function isOpen(v){ if(v==="etudes") return bestOf("qcm")>=PASS; if(v==="trous") return bestEtude()>=PASS; return true; }
+function isOpen(v){ if(!gateOn()) return true; if(v==="etudes") return bestOf("qcm")>=PASS; if(v==="trous") return bestEtude()>=PASS; return true; }
 function gateMsg(kind,note){
+  if(!gateOn()) return "";
   if(kind==="qcm") return note>=PASS
     ? `<div class="gatemsg ok">🔓 <b>Bravo, ${fmt(note)}/20 !</b> Tu as débloqué les <b>Études de texte</b>. <a class="btn green sm" href="#etudes">Y aller ▶</a></div>`
     : `<div class="gatemsg">🔒 Il te faut au moins <b>${PASS}/20</b> au QCM pour débloquer les Études de texte. ${bestOf("qcm")>=PASS?"(Elles sont déjà débloquées grâce à ta meilleure note.)":"Révise et retente ta chance !"}</div>`;
