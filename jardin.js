@@ -109,5 +109,5 @@ async function endGame(win, msg){
   const res = await saveResult("carte-" + G.c.id, note, 20);
   const o = document.createElement("div"); o.className = "overlay end";
   o.innerHTML = `<div class="ocard">${win ? '<div class="trophy">🌻</div>' : '<div class="trophy">🥀</div>'}<h2 style="margin:4px 0">${msg}</h2><p class="note">${G.good} fleurs (+1), ${G.bad} erreurs (−0,5)${G.left ? ", " + G.left + " bourgeons non fleuris (réponses affichées en brun)" : ""}${win ? " · il restait " + fmtT(G.t) : ""}.</p>${resultBox(G.c.titre, note, 20, res)}<div class="row" style="justify-content:center;margin-top:10px"><button class="btn green" onclick="renderJardin('${G.c.id}')">Rejouer</button><button class="btn alt" onclick="this.closest('.overlay').remove()">Voir la carte</button><a class="btn alt" href="#jardin">Autres cartes</a></div></div>`;
-  setTimeout(() => game.appendChild(o), win ? 1400 : 700);
+  setTimeout(() => { game.appendChild(o); updMail(res.at); }, win ? 1400 : 700);
 }

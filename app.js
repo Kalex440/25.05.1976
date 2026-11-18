@@ -27,16 +27,17 @@ function pseudo(){return (pseudoIn.value||"").trim()||"Anonyme"}
 /* ========================= ENREGISTREMENT ========================= */
 let canSave=false, myDoc=null;
 const myLocal = store.get("myResults",{});
-$("#saveInfo").innerHTML='<span class="note">📨 À la fin de chaque module, ta note et ta <b>moyenne générale</b> sont envoyées automatiquement à Kendji. Pense à indiquer ton prénom ci-dessus.</span>';
+$("#saveInfo").innerHTML='<span class="note">📨 Quand tu auras terminé les 4 modules (QCM, études de texte, textes à trous, cartes mentales), un récapitulatif de toutes tes notes et de ta <b>moyenne générale</b> sera envoyé automatiquement à Kendji. Pense à indiquer ton prénom ci-dessus.</span>';
 
 async function saveResult(kind,score,max){
   const at=Date.now();
   const prev=myLocal[kind];
   myLocal[kind]={s:score,m:max,at,best:Math.max(score,prev?prev.best??prev.s:-99),n:(prev?prev.n||1:0)+1};
   store.set("myResults",myLocal);
-  const go=()=>sendMail(kind,score,at);
-  if(!(pseudoIn.value||"").trim()&&!store.get("pseudo","")){ mailState[at]={s:"need",go}; }
-  else { if(!(pseudoIn.value||"").trim()) pseudoIn.value=store.get("pseudo",""); go(); }
+  const M=moyennes(), manque=M.mods.filter(m=>m.moy===null).map(m=>m.nom);
+  if(manque.length){ mailState[at]={s:"wait",manque}; }
+  else if(store.get("recapSent",0)){ mailState[at]={s:"already"}; }
+  else prepareRecap(at,kind,score);
   return {at};
 }
 function makeCode(kind,s,m,at){
@@ -61,26 +62,33 @@ function moyennes(){
   return {mods,gen:faits.length?faits.reduce((t,m)=>t+m.moy,0)/faits.length:null};
 }
 const mailState={};
+function prepareRecap(at,kind,score){
+  const go=()=>sendMail(kind,score,at);
+  if(!(pseudoIn.value||"").trim()&&!store.get("pseudo","")){ mailState[at]={s:"need",go}; updMail(at); }
+  else { if(!(pseudoIn.value||"").trim()) pseudoIn.value=store.get("pseudo",""); go(); }
+}
 async function sendMail(kind,score,at){
   const st=mailState[at]={s:"sending"}; updMail(at);
-  const M=moyennes(), lab=LABELS[kind]||kind, name=pseudo();
+  const M=moyennes(), lab=kind?(LABELS[kind]||kind):"", name=pseudo();
   const detail=Object.keys(myLocal).filter(k=>LABELS[k]).map(k=>`• ${LABELS[k]} : ${fmt(Math.max(0,myLocal[k].s))}/20 (meilleure ${fmt(n20(myLocal[k]))}/20, ${myLocal[k].n||1} essai(s))`).join("\n");
-  const body={_subject:`📚 25.05.1976 — ${name} : ${lab} ${fmt(Math.max(0,score))}/20 · moyenne ${M.gen===null?"—":fmt(M.gen)}/20`,_template:"table",_captcha:"false",
-    "Élève":name,"Module terminé":lab,"Note obtenue":fmt(Math.max(0,score))+"/20","Moyenne générale":M.gen===null?"—":fmt(M.gen)+"/20"};
+  const body={_subject:`📚 Récapitulatif 25.05.1976 — ${name} : moyenne ${M.gen===null?"—":fmt(M.gen)}/20`,_template:"table",_captcha:"false",
+    "Élève":name,"Moyenne générale":M.gen===null?"—":fmt(M.gen)+"/20","Dernier module terminé":kind?lab+" ("+fmt(Math.max(0,score))+"/20)":"—"};
   M.mods.forEach(m=>{body["Moyenne "+m.nom]=m.moy===null?"pas encore fait":`${fmt(m.moy)}/20 (${m.n} épreuve${m.n>1?"s":""})`});
   body["Détail de toutes les notes"]=detail; body["Date"]=new Date(at).toLocaleString("fr-FR");
   try{
     const r=await fetch(MAIL_URL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});
     const j=await r.json().catch(()=>({}));
-    st.s=(r.ok&&String(j.success)!=="false")?"ok":"err";
+    st.s=(r.ok&&String(j.success)!=="false")?"ok":"err"; if(st.s==="ok") store.set("recapSent",at);
   }catch(e){ st.s="err"; }
   st.retry=()=>sendMail(kind,score,at); updMail(at);
 }
 function mailHTML(at){
   const st=mailState[at]||{};
-  if(st.s==="need") return `<div class="mailst warn">✏️ Indique ton prénom pour envoyer ta note à Kendji : <input type="text" class="mailname" maxlength="40" placeholder="Ton prénom"> <button class="btn sm" data-mailgo="${at}">Envoyer</button></div>`;
-  if(st.s==="sending") return `<div class="mailst">📨 Envoi de ta note à Kendji…</div>`;
-  if(st.s==="ok") return `<div class="mailst ok">✓ Ta note et ta moyenne ont été envoyées à Kendji.</div>`;
+  if(st.s==="need") return `<div class="mailst warn">✏️ Tu as terminé les 4 modules ! Indique ton prénom pour envoyer ton récapitulatif à Kendji : <input type="text" class="mailname" maxlength="40" placeholder="Ton prénom"> <button class="btn sm" data-mailgo="${at}">Envoyer</button></div>`;
+  if(st.s==="sending") return `<div class="mailst">📨 Envoi de ton récapitulatif à Kendji…</div>`;
+  if(st.s==="ok") return `<div class="mailst ok">✓ Bravo, tu as terminé les 4 modules ! Ton récapitulatif (toutes tes notes et ta moyenne) a été envoyé à Kendji.</div>`;
+  if(st.s==="wait") return `<div class="mailst">📨 Ton récapitulatif sera envoyé à Kendji quand tu auras terminé les 4 modules. Il te reste : <b>${st.manque.join(", ")}</b>.</div>`;
+  if(st.s==="already") return `<div class="mailst">📨 Ton récapitulatif a déjà été envoyé à Kendji. Pour lui envoyer tes nouvelles notes, va dans <a href="#mes-notes">Mes notes</a>.</div>`;
   if(st.s==="err") return `<div class="mailst warn">⚠️ L'envoi n'a pas marché (connexion ?). <button class="btn sm" data-mailretry="${at}">Réessayer</button></div>`;
   return "";
 }
@@ -90,6 +98,12 @@ document.addEventListener("click",e=>{
   if(g){ const v=g.parentElement.querySelector(".mailname").value.trim(); if(!v) return; pseudoIn.value=v; store.set("pseudo",v); const at=+g.dataset.mailgo; mailState[at].go(); }
   if(r){ const at=+r.dataset.mailretry; mailState[at].retry&&mailState[at].retry(); }
 });
+function recapBox(M){
+  const manque=M.mods.filter(m=>m.moy===null).map(m=>m.nom), sent=store.get("recapSent",0);
+  if(manque.length) return `<div class="mailst">📨 Ton récapitulatif sera envoyé à Kendji quand tu auras terminé les 4 modules. Il te reste : <b>${manque.join(", ")}</b>.</div>`;
+  return `<div id="mail-recap">${sent?`<div class="mailst ok">✓ Récapitulatif envoyé à Kendji le ${new Date(sent).toLocaleString("fr-FR")}.</div>`:""}<button class="btn sm" id="recapBtn">${sent?"Renvoyer mes notes à jour":"Envoyer mon récapitulatif"}</button></div>`;
+}
+document.addEventListener("click",e=>{ if(e.target.id==="recapBtn"){ const at=Date.now(); const box=$("#mail-recap"); box.id="mail-"+at; prepareRecap(at,null,0); } });
 function resultBox(title,score,max,res){
   const M=moyennes();
   let h=`<h3 style="margin-top:0">${esc(title)} : <span class="big">${fmt(Math.max(0,score))} / ${max}</span></h3>`;
@@ -167,7 +181,7 @@ function renderEtude(id){
 /* ========================= MES NOTES ========================= */
 function renderMine(){
   const M=moyennes();
-  const head=`<div class="card avgcard"><div><span class="note">Moyenne générale</span><div class="big" style="font-size:40px">${M.gen===null?"—":fmt(M.gen)+"<small>/20</small>"}</div></div><div class="avgmods">${M.mods.map(m=>`<div><span class="note">${m.nom}</span><b>${m.moy===null?"—":fmt(m.moy)+"/20"}</b></div>`).join("")}</div></div><p class="note">La moyenne générale est la moyenne des 4 modules ; dans chaque module, on prend ta meilleure note à chaque épreuve.</p>`;
+  const head=`<div class="card avgcard"><div><span class="note">Moyenne générale</span><div class="big" style="font-size:40px">${M.gen===null?"—":fmt(M.gen)+"<small>/20</small>"}</div></div><div class="avgmods">${M.mods.map(m=>`<div><span class="note">${m.nom}</span><b>${m.moy===null?"—":fmt(m.moy)+"/20"}</b></div>`).join("")}</div></div><p class="note">La moyenne générale est la moyenne des 4 modules ; dans chaque module, on prend ta meilleure note à chaque épreuve.</p>`+recapBox(M);
   const rows=Object.keys(myLocal).filter(k=>LABELS[k]).sort((a,b)=>myLocal[b].at-myLocal[a].at).map(k=>{const r=myLocal[k];return `<tr><td>${esc(LABELS[k])}</td><td><b>${fmt(Math.max(0,r.s))} / ${r.m}</b></td><td>${fmt(Math.max(0,r.best??r.s))} / ${r.m}</td><td>${r.n||1}</td><td class="note">${new Date(r.at).toLocaleString("fr-FR")}</td></tr>`}).join("");
   $("#myNotes").innerHTML=head+(rows?`<div class="card" style="overflow-x:auto"><table><tr><th>Épreuve</th><th>Dernière note</th><th>Meilleure</th><th>Essais</th><th>Date</th></tr>${rows}</table></div><p class="note">Notes gardées sur cet appareil.</p>`:`<div class="card"><span class="note">Aucune épreuve terminée pour l'instant. Commence par le <a href="#qcm">QCM</a>.</span></div>`);
 }
