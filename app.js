@@ -104,9 +104,20 @@ function recapBox(M){
   return `<div id="mail-recap">${sent?`<div class="mailst ok">✓ Récapitulatif envoyé à Kendji le ${new Date(sent).toLocaleString("fr-FR")}.</div>`:""}<button class="btn sm" id="recapBtn">${sent?"Renvoyer mes notes à jour":"Envoyer mon récapitulatif"}</button></div>`;
 }
 document.addEventListener("click",e=>{ if(e.target.id==="recapBtn"){ const at=Date.now(); const box=$("#mail-recap"); box.id="mail-"+at; prepareRecap(at,null,0); } });
+/* Réaction de Pépin à la fin de chaque module, selon la note sur 20 */
+function pepinSays(n){
+  if(n<10) return {g:"pepin_miskine",t:"Miskine…",c:"low"};
+  if(n<12) return {g:"pepin_passe",t:"Raaaaaasouuuul sa passe",c:"mid"};
+  if(n<=16) return {g:"pepin_monstre",t:"Tiiiiééééé mon monsstre",c:"good"};
+  return {g:"pepin_mashallah",t:"Maaashhhaalllaa",c:"top"};
+}
+function pepinBox(score,max){
+  const p=pepinSays(Math.max(0,score)/max*20);
+  return `<div class="pepin ${p.c}"><img src="gif/${p.g}.gif?r=${Date.now()}" alt="Pépin" width="220" height="200"><div class="bulle">${[...p.t].map((ch,i)=>`<span style="animation-delay:${0.25+i*0.05}s">${ch===" "?"&nbsp;":esc(ch)}</span>`).join("")}</div></div>`;
+}
 function resultBox(title,score,max,res){
   const M=moyennes();
-  let h=`<h3 style="margin-top:0">${esc(title)} : <span class="big">${fmt(Math.max(0,score))} / ${max}</span></h3>`;
+  let h=pepinBox(score,max)+`<h3 style="margin-top:0">${esc(title)} : <span class="big">${fmt(Math.max(0,score))} / ${max}</span></h3>`;
   h+=`<div class="avgline">📊 Ta moyenne générale (tous modules) : <b>${M.gen===null?"—":fmt(M.gen)+" / 20"}</b> <span class="note">${M.mods.filter(m=>m.moy!==null).map(m=>m.nom+" "+fmt(m.moy)).join(" · ")}</span></div>`;
   h+=`<div id="mail-${res.at}">${mailHTML(res.at)}</div>`;
   return h;
