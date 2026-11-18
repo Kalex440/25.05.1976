@@ -299,3 +299,15 @@ button.ans:disabled{cursor:default}
 .gatemsg.ok{background:var(--ok-l);border-color:#9fd6a7;color:#1d5a28;animation:grow .5s cubic-bezier(.2,1.6,.4,1)}
 .gatemsg .btn{margin-left:6px}
 .tile.tlock{opacity:.6}.tile.tlock b::before{content:"🔒 "}
+
+/* ===== Moyenne et envoi par mail ===== */
+.avgline{background:var(--blue-l);border-radius:12px;padding:10px 14px;margin:8px 0}
+.mailst{border-radius:12px;padding:10px 14px;margin:8px 0;background:#f3f6fb;font-weight:700}
+.mailst.ok{background:var(--ok-l);color:var(--ok)}
+.mailst.warn{background:var(--sun-l);color:#7a5600}
+.mailst input{max-width:200px;padding:6px 10px;margin:4px 0}
+.avgcard{display:flex;gap:20px;align-items:center;flex-wrap:wrap;border:2px solid var(--blue)}
+.avgcard .big small{font-size:18px;color:var(--mut)}
+.avgmods{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;flex:1}
+.avgmods>div{background:var(--blue-l);border-radius:12px;padding:8px 12px;display:flex;flex-direction:column}
+.avgmods b{font:600 20px "Fredoka",sans-serif;color:var(--navy)}

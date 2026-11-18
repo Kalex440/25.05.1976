@@ -33,7 +33,6 @@
     <a href="#bac" data-v="bac">Sujets de bac</a>
     <a href="#direct" data-v="direct">Jouer entre amis</a>
     <a href="#mes-notes" data-v="mes-notes">Mes notes</a>
-    <a href="#tableau" data-v="tableau">Tableau des notes</a>
     <a href="#" class="out" onclick="logout();return false">Déconnexion</a>
   </nav>
 </div></header>
@@ -48,7 +47,7 @@
   <p>Vérifie que tu maîtrises les notions de <b>nature</b> et de <b>justice</b> : un QCM à points négatifs qui mélange le cours et la vidéo des Bons Profs, puis quatre études de texte de dix questions, avec indices et correction notée.</p>
   <div class="card">
     <h3 style="margin-top:0">Ton prénom (ou pseudo)</h3>
-    <p class="note" style="margin-top:0">Il apparaît avec ta note quand tu l'envoies à Kendji.</p>
+    <p class="note" style="margin-top:0">Il apparaît avec tes notes dans le mail envoyé à Kendji à la fin de chaque module.</p>
     <div class="row"><input type="text" id="pseudo" maxlength="40" placeholder="Ex. : Léa, terminale 3" style="max-width:340px"><span id="pseudoOk" class="note"></span></div>
   </div>
   <div class="grid2">
@@ -132,17 +131,6 @@
   <div id="myNotes"></div>
 </section>
 
-<section id="v-tableau" class="hide">
-  <h1>Tableau des notes</h1>
-  <div class="rule"></div>
-  <p class="mut">Colle ici les codes de résultat que les élèves t'envoient. Le tableau est gardé sur cet appareil : utilise toujours le même téléphone ou ordinateur.</p>
-  <div class="card">
-    <h3 style="margin-top:0">Ajouter des codes de résultat</h3>
-    <textarea id="impTxt" placeholder="Colle un ou plusieurs codes (ou le message WhatsApp complet)"></textarea>
-    <div class="row" style="margin-top:8px"><button class="btn" id="impBtn">Ajouter au tableau</button><button class="btn alt sm" id="clrBtn">Vider le tableau</button><span id="impMsg" class="note"></span></div>
-  </div>
-  <div class="card" style="overflow-x:auto"><div id="board"></div></div>
-</section>
 
 </main>
 <script src="data.js"></script>
