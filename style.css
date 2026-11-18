@@ -236,3 +236,53 @@ button.ans{cursor:pointer}button.ans:active{transform:translateY(3px);box-shadow
 button.ans:disabled{cursor:default}
 @media (max-width:560px){.modes{grid-template-columns:1fr}}
 @media (max-width:700px){nav{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;scrollbar-width:none}nav a{white-space:nowrap}}
+
+/* ===== QCM progressif ===== */
+.lvl{position:relative;margin-top:18px}
+.lvlh{display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,var(--blue),var(--blue-d));color:#fff;border-radius:16px;padding:10px 16px;box-shadow:0 3px 0 var(--navy)}
+.lvlh b{font:600 19px "Fredoka",sans-serif}.lvlh .note{color:#dbe8ff}.lvi{font-size:30px}
+.lvl .lock{display:none}
+.lvl.locked .lock{display:block;position:sticky;top:90px;z-index:4;margin:12px auto;max-width:420px;text-align:center;background:#fff;border:2px dashed var(--blue);border-radius:14px;padding:12px;font-weight:800;color:var(--blue-d)}
+.lvl.locked>.card{filter:blur(5px) grayscale(.6);pointer-events:none;user-select:none;opacity:.6}
+.lvl.unlocked .lvlh{animation:grow .6s cubic-bezier(.2,1.6,.4,1)}
+
+/* ===== Flashcards ===== */
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:4px}
+.seg button{border:none;background:none;border-radius:99px;padding:6px 12px;font:700 13.5px "Nunito";color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--blue);color:#fff}
+.flip{perspective:1200px;height:280px;max-width:560px;margin:0 auto;cursor:pointer;position:relative;outline:none}
+.flip .face{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;transition:transform .55s cubic-bezier(.3,1.3,.5,1);border:2px solid var(--blue);box-shadow:0 6px 0 var(--blue-d)}
+.flip .front{background:#fff}.flip .back{background:var(--blue-l);transform:rotateY(180deg)}
+.flip .front.nature{border-color:var(--grass-d);box-shadow:0 6px 0 #2b6420}.flip .back.nature{background:#eef9e8;border-color:var(--grass-d);box-shadow:0 6px 0 #2b6420}
+.flip.on .front{transform:rotateY(-180deg)}.flip.on .back{transform:rotateY(0)}
+.fq{font:600 26px "Fredoka",sans-serif;color:var(--navy);margin-bottom:12px}
+.fa{font-size:18px;line-height:1.55}
+.flip.yes .face{animation:outR .28s forwards}.flip.no .face{animation:outL .28s forwards}
+@keyframes outR{to{transform:translateX(120px) rotate(12deg);opacity:0}}@keyframes outL{to{transform:translateX(-120px) rotate(-12deg);opacity:0}}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+
+/* ===== Mots mêlés ===== */
+.mmwrap{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:16px;align-items:start;margin:12px 0}
+.mm{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:3px;background:#fff;border:2px solid var(--blue);border-radius:16px;padding:8px;touch-action:none;user-select:none;-webkit-user-select:none;max-width:560px;width:100%}
+.mc{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font:600 clamp(13px,2.6vw,19px) "Fredoka",sans-serif;color:var(--navy);border-radius:8px;cursor:pointer;transition:background .1s}
+.mc.hl,.mc.start{background:var(--sun);color:#5d3a1f}
+.mc.found{background:hsl(var(--h),75%,80%);color:hsl(var(--h),60%,25%);animation:grow .4s both}
+.mc.miss{background:var(--ko-l)}
+.mlist{display:flex;flex-direction:column;gap:4px}
+.mw{display:flex;align-items:center;gap:8px;font-weight:700;padding:4px 10px;border-radius:10px;background:#fff;border:1px solid var(--line)}
+.mw.done{text-decoration:line-through;color:var(--mut);background:var(--ok-l)}
+.mth{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}.mth.n{background:var(--grass1)}.mth.j{background:var(--blue)}.mth.b{background:linear-gradient(90deg,var(--grass1) 50%,var(--blue) 50%)}
+.mexp{background:#fff;border-left:5px solid hsl(var(--h),70%,55%);border-radius:0 14px 14px 0;padding:10px 14px;margin:8px 0;animation:rise .4s both;box-shadow:0 2px 0 var(--line)}
+.mexp p{margin:4px 0 0}
+@media (max-width:700px){.mmwrap{grid-template-columns:1fr}.mlist{flex-direction:row;flex-wrap:wrap}}
+
+/* ===== Sujets de bac ===== */
+.acc{background:#fff;border:1.5px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden}
+.acc summary{cursor:pointer;padding:12px 16px;font:600 17px "Fredoka",sans-serif;color:var(--navy);list-style:none;display:flex;justify-content:space-between}
+.acc summary::after{content:"▾";transition:.2s}.acc[open] summary::after{transform:rotate(180deg)}
+.acc[open] summary{background:var(--blue-l)}
+.accb{padding:4px 18px 12px}.accb li{margin:5px 0}.accb h4{font-family:"Fredoka",sans-serif;color:var(--blue-d);margin:14px 0 4px}
+.mngrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.mn{background:#fff;border-radius:16px;padding:14px 16px;border-top:5px solid var(--blue);box-shadow:0 3px 0 var(--line);animation:rise .4s both}
+.mn.nature{border-top-color:var(--grass-d)}
+.mn b{font:600 17px "Fredoka",sans-serif;color:var(--navy)}.mn p{margin:6px 0 0}

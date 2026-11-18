@@ -110,7 +110,7 @@ function bcastLobby(){
 function hostStart(){
   const pool = QCM.filter(q => q.o.length === 4).slice();
   for (let i = pool.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
-  L.qs = pool.slice(0, L.nq); L.qi = -1; L.hearts = HEARTS; L.team = 0; L.teamGood = 0;
+  L.qs = pool.slice(0, L.nq).sort((a, b) => (a.niv || 2) - (b.niv || 2)); L.qi = -1; L.hearts = HEARTS; L.team = 0; L.teamGood = 0;
   Object.values(L.players).forEach(p => { p.score = 0; p.good = 0; p.ans = {}; });
   hostNext();
 }

@@ -79,12 +79,14 @@ document.addEventListener("click",async e=>{
 let qState;
 function qInit(){
   qState={ans:QCM.map(()=>null),score:0,done:false};
-  const perm=QCM.map((_,i)=>i);for(let i=perm.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[perm[i],perm[j]]=[perm[j],perm[i]]}qState.perm=perm;
+  const perm=[];[1,2,3].forEach(n=>{const g=QCM.map((q,i)=>i).filter(i=>(QCM[i].niv||2)===n);for(let i=g.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[g[i],g[j]]=[g[j],g[i]]}perm.push(...g)});qState.perm=perm;
   // ordre d'options mélangé une fois par session
   qState.order=QCM.map(q=>{const idx=q.o.map((_,i)=>i);for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}return idx});
-  $("#qList").innerHTML=qState.perm.map((i,pos)=>{const q=QCM[i];return `<div class="card" id="q${i}"><div class="qhead"><span class="badge">${pos+1}</span><span>${esc(q.q)}${q.src==="video"?'<span class="tag">📺 vidéo</span>':''}</span></div><div class="opts">${qState.order[i].map(k=>`<button class="opt" data-q="${i}" data-k="${k}">${esc(q.o[k])}</button>`).join("")}<button class="opt skip" data-q="${i}" data-k="-1">Je ne sais pas (0 point)</button></div><div class="expl hide"></div></div>`}).join("");
-  $("#qEnd").classList.add("hide"); qUpd();
+  const NIVN={1:["🌱","Niveau 1 · Facile","Les bases à connaître absolument."],2:["🌿","Niveau 2 · Moyen","Les auteurs et leurs thèses."],3:["🌳","Niveau 3 · Difficile","Les nuances et les concepts plus fins."]};
+  $("#qList").innerHTML=qState.perm.map((i,pos)=>{const q=QCM[i],n=q.niv||2,first=pos===0||(QCM[qState.perm[pos-1]].niv||2)!==n,cnt=qState.perm.filter(x=>(QCM[x].niv||2)===n).length;return (first?`${pos?"</div>":""}<div class="lvl" data-n="${n}"><div class="lvlh"><span class="lvi">${NIVN[n][0]}</span><div><b>${NIVN[n][1]}</b><div class="note">${cnt} questions · ${NIVN[n][2]}</div></div></div><div class="lock">🔒 Termine le niveau ${n-1} pour débloquer ce niveau.</div>`:"")+`<div class="card" id="q${i}"><div class="qhead"><span class="badge">${pos+1}</span><span>${esc(q.q)}${q.src==="video"?'<span class="tag">📺 vidéo</span>':''}</span></div><div class="opts">${qState.order[i].map(k=>`<button class="opt" data-q="${i}" data-k="${k}">${esc(q.o[k])}</button>`).join("")}<button class="opt skip" data-q="${i}" data-k="-1">Je ne sais pas (0 point)</button></div><div class="expl hide"></div></div>`}).join("")+"</div>";
+  $("#qEnd").classList.add("hide"); qUpd(); qLocks();
 }
+function qLocks(){document.querySelectorAll("#qList .lvl").forEach(l=>{const n=+l.dataset.n;const prevDone=n===1||QCM.every((q,i)=>(q.niv||2)!==n-1||qState.ans[i]!==null);const was=l.classList.contains("locked");l.classList.toggle("locked",!prevDone);if(was&&prevDone){l.classList.add("unlocked");setTimeout(()=>l.scrollIntoView({behavior:"smooth",block:"start"}),300)}})}
 function qNote(){return Math.max(0,qState.score)/QCM.length*20}
 function qUpd(){const n=qState.ans.filter(a=>a!==null).length;$("#qScore").textContent=fmt(qNote())+" / 20";$("#qProg").textContent=n+" / "+QCM.length+" répondues · "+fmt(qState.score)+" pts";$("#qBar").style.width=(n/QCM.length*100)+"%"}
 $("#qList").addEventListener("click",async e=>{
@@ -95,6 +97,7 @@ $("#qList").addEventListener("click",async e=>{
   let pts=0,lab; if(k===q.a){pts=1;lab="Bonne réponse : +1"}else if(k===-1){lab="Passée : 0"}else{pts=-0.5;lab="Erreur : −0,5"}
   qState.score+=pts;
   const ex=card.querySelector(".expl"); ex.innerHTML=`<b>${lab}.</b> ${esc(q.e)}`; ex.classList.remove("hide"); qUpd();
+  qLocks();
   if(qState.ans.every(a=>a!==null)&&!qState.done){
     qState.done=true;
     const good=qState.ans.filter((a,j)=>a===QCM[j].a).length, bad=qState.ans.filter((a,j)=>a!==-1&&a!==QCM[j].a).length, skip=QCM.length-good-bad;
@@ -174,14 +177,17 @@ $("#clrBtn").onclick=()=>{ if($("#clrBtn").dataset.sure){store.set("board",[]);b
 function route(){
   const h=(location.hash||"#accueil").slice(1);
   let v=h.startsWith("etude-")?"etudes":h;
-  if(h.startsWith("trou-")) v="trous"; if(h.startsWith("carte-")) v="jardin"; if(h.startsWith("salon-")) v="direct";
-  if(!["accueil","qcm","etudes","trous","jardin","direct","mes-notes","tableau"].includes(v)) v="accueil";
+  if(h.startsWith("trou-")) v="trous"; if(h.startsWith("carte-")) v="jardin"; if(h.startsWith("salon-")) v="direct"; if(h.startsWith("bac-")) v="bac";
+  if(!["accueil","qcm","etudes","trous","jardin","flash","mots","bac","direct","mes-notes","tableau"].includes(v)) v="accueil";
   if(v!=="jardin"&&typeof G!=="undefined"&&G&&G.timer){clearInterval(G.timer);G=null}
   document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));
   document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);
   if(v==="trous") renderTrous(h.startsWith("trou-")?h.slice(5):null);
   if(v==="jardin") renderJardin(h.startsWith("carte-")?h.slice(6):null);
+  if(v==="flash") renderFlash();
+  if(v==="mots"&&!W) renderMots();
+  if(v==="bac") renderBac(h.startsWith("bac-")?h.slice(4):null);
   if(v==="direct") renderDirect(h.startsWith("salon-")?h.slice(6).replace(/\D/g,""):null);
   if(v==="mes-notes") renderMine();
   if(v==="tableau") startBoard();
