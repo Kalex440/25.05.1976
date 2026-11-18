@@ -102,7 +102,7 @@ $("#qList").addEventListener("click",async e=>{
     qState.done=true;
     const good=qState.ans.filter((a,j)=>a===QCM[j].a).length, bad=qState.ans.filter((a,j)=>a!==-1&&a!==QCM[j].a).length, skip=QCM.length-good-bad;
     const note=Math.round(qNote()*10)/10; const res=await saveResult("qcm",note,20);
-    const end=$("#qEnd"); end.innerHTML=resultBox("QCM",note,20,res)+`<p class="note">${good} bonnes réponses, ${bad} erreurs, ${skip} passées : ${fmt(qState.score)} points sur ${QCM.length}, ramenés sur 20.${qState.score<0?" Ton total est négatif : la note est ramenée à 0.":""}</p><button class="btn alt" onclick="qInit();scrollTo(0,0)">Refaire le QCM</button>`;
+    const end=$("#qEnd"); end.innerHTML=gateMsg("qcm",note)+resultBox("QCM",note,20,res)+`<p class="note">${good} bonnes réponses, ${bad} erreurs, ${skip} passées : ${fmt(qState.score)} points sur ${QCM.length}, ramenés sur 20.${qState.score<0?" Ton total est négatif : la note est ramenée à 0.":""}</p><button class="btn alt" onclick="qInit();scrollTo(0,0)">Refaire le QCM</button>`;
     end.classList.remove("hide"); end.scrollIntoView({behavior:"smooth",block:"center"});
   }
 });
@@ -132,7 +132,7 @@ function renderEtude(id){
       $("#cor"+i).innerHTML=`<div style="margin-top:10px"><b>${fmt(pts)} / 5</b> — éléments attendus :<ul class="elts">${lis}</ul><div class="model"><b>Proposition de corrigé :</b> ${esc(q.mod)}</div></div>`;
     });
     const note=Math.round(tot/(5*e.qs.length)*20*10)/10; const res=await saveResult("etude-"+id,note,20);
-    const r=$("#eRes"); r.innerHTML=resultBox(e.titre,note,20,res)+`<p class="note">Total : ${fmt(tot)} points sur ${5*e.qs.length}, ramenés sur 20. La correction repère les idées et les mots-clés attendus. Si tu as exprimé une idée autrement, compare avec le corrigé et sois honnête avec toi-même.</p>`;
+    const r=$("#eRes"); r.innerHTML=gateMsg("etude",note)+resultBox(e.titre,note,20,res)+`<p class="note">Total : ${fmt(tot)} points sur ${5*e.qs.length}, ramenés sur 20. La correction repère les idées et les mots-clés attendus. Si tu as exprimé une idée autrement, compare avec le corrigé et sois honnête avec toi-même.</p>`;
     r.classList.remove("hide"); r.scrollIntoView({behavior:"smooth",block:"center"});
   };
 }
@@ -173,6 +173,38 @@ $("#impBtn").onclick=()=>{
 };
 $("#clrBtn").onclick=()=>{ if($("#clrBtn").dataset.sure){store.set("board",[]);boardDocs=[];drawBoard();$("#clrBtn").textContent="Vider le tableau";delete $("#clrBtn").dataset.sure}else{$("#clrBtn").dataset.sure=1;$("#clrBtn").textContent="Confirmer : tout effacer ?"} };
 
+/* ========================= PARCOURS : QCM → ÉTUDES → TEXTES À TROUS ========================= */
+const PASS=12;
+const bestOf=k=>myLocal[k]?Math.max(myLocal[k].best??myLocal[k].s,myLocal[k].s):-1;
+const bestEtude=()=>Math.max(-1,...ETUDES.map(e=>bestOf("etude-"+e.id)));
+function isOpen(v){ if(v==="etudes") return bestOf("qcm")>=PASS; if(v==="trous") return bestEtude()>=PASS; return true; }
+function gateMsg(kind,note){
+  if(kind==="qcm") return note>=PASS
+    ? `<div class="gatemsg ok">🔓 <b>Bravo, ${fmt(note)}/20 !</b> Tu as débloqué les <b>Études de texte</b>. <a class="btn green sm" href="#etudes">Y aller ▶</a></div>`
+    : `<div class="gatemsg">🔒 Il te faut au moins <b>${PASS}/20</b> au QCM pour débloquer les Études de texte. ${bestOf("qcm")>=PASS?"(Elles sont déjà débloquées grâce à ta meilleure note.)":"Révise et retente ta chance !"}</div>`;
+  return note>=PASS
+    ? `<div class="gatemsg ok">🔓 <b>Bravo, ${fmt(note)}/20 !</b> Tu as débloqué les <b>Textes à trous</b>. <a class="btn green sm" href="#trous">Y aller ▶</a></div>`
+    : `<div class="gatemsg">🔒 Il te faut au moins <b>${PASS}/20</b> à une étude de texte pour débloquer les Textes à trous. ${bestEtude()>=PASS?"(Ils sont déjà débloqués grâce à ta meilleure note.)":"Relis le corrigé et retente ta chance !"}</div>`;
+}
+function refreshGates(){
+  [["etudes","Études de texte"],["trous","Textes à trous"]].forEach(([v,l])=>{
+    const a=document.querySelector(`#nav a[data-v="${v}"]`); if(a) a.textContent=(isOpen(v)?"":"🔒 ")+l;
+    document.querySelectorAll(`.tile[href="#${v}"]`).forEach(t=>t.classList.toggle("tlock",!isOpen(v)));
+  });
+}
+function gate(v){
+  const sec=$("#v-"+v); if(!sec) return true;
+  let g=sec.querySelector(".gatebox"); if(!g){ g=document.createElement("div"); g.className="gatebox"; sec.querySelector(".rule").after(g); }
+  const open=isOpen(v); sec.classList.toggle("gated",!open);
+  if(!open){
+    const prev=v==="etudes"?{n:"au QCM",h:"#qcm",b:bestOf("qcm")}:{n:"à une étude de texte",h:"#etudes",b:bestEtude()};
+    g.innerHTML=`<div class="lockcard"><div class="bigemoji">🔒</div><h2>Niveau verrouillé</h2><p>Pour accéder à cette partie, obtiens au moins <b>${PASS}/20</b> ${prev.n}.</p>
+      <div class="steps"><span class="${bestOf("qcm")>=PASS?"done":"cur"}">1. QCM</span><span class="${bestOf("qcm")<PASS?"":bestEtude()>=PASS?"done":"cur"}">2. Études de texte</span><span class="${bestEtude()>=PASS?"cur":""}">3. Textes à trous</span></div>
+      <p class="note">Ta meilleure note : <b>${prev.b<0?"aucune pour l'instant":fmt(prev.b)+"/20"}</b></p><a class="btn green" href="${prev.h}">${v==="etudes"?"Faire le QCM":"Faire une étude de texte"} ▶</a></div>`;
+  } else g.innerHTML="";
+  return open;
+}
+
 /* ========================= ROUTAGE ========================= */
 function route(){
   const h=(location.hash||"#accueil").slice(1);
@@ -182,6 +214,8 @@ function route(){
   if(v!=="jardin"&&typeof G!=="undefined"&&G&&G.timer){clearInterval(G.timer);G=null}
   document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));
   document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
+  refreshGates();
+  if((v==="etudes"||v==="trous")&&!gate(v)){ scrollTo(0,0); return; }
   if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);
   if(v==="trous") renderTrous(h.startsWith("trou-")?h.slice(5):null);
   if(v==="jardin") renderJardin(h.startsWith("carte-")?h.slice(6):null);
