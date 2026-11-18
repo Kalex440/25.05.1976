@@ -262,7 +262,7 @@ function route(){
   const h=(location.hash||"#accueil").slice(1);
   let v=h.startsWith("etude-")?"etudes":h;
   if(h.startsWith("trou-")) v="trous"; if(h.startsWith("carte-")) v="jardin"; if(h.startsWith("salon-")) v="direct"; if(h.startsWith("bac-")) v="bac";
-  if(!["accueil","qcm","etudes","trous","jardin","flash","mots","bac","direct","mes-notes"].includes(v)) v="accueil";
+  if(!["accueil","cours","qcm","etudes","trous","jardin","flash","mots","bac","direct","mes-notes"].includes(v)) v="accueil";
   if(v!=="jardin"&&typeof G!=="undefined"&&G&&G.timer){clearInterval(G.timer);G=null}
   document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));
   document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
@@ -271,6 +271,7 @@ function route(){
   if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);
   if(v==="trous") renderTrous(h.startsWith("trou-")?h.slice(5):null);
   if(v==="jardin") renderJardin(h.startsWith("carte-")?h.slice(6):null);
+  if(v==="cours") renderCours();
   if(v==="flash") renderFlash();
   if(v==="mots"&&!W) renderMots();
   if(v==="bac") renderBac(h.startsWith("bac-")?h.slice(4):null);

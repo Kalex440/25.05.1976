@@ -10,7 +10,7 @@
 <script>try{var a=JSON.parse(localStorage.getItem("auth")||"null");if(!(a&&a.ok&&(a.rem||Date.now()-a.t<432e5)))location.replace("index.html"+location.hash)}catch(e){location.replace("index.html"+location.hash)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=202611181604">
+<link rel="stylesheet" href="style.css?v=202611181611">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute">
@@ -27,6 +27,7 @@
   <div class="brand"><svg class="sunicon"><use href="#sun"/></svg><div><small>25.05.1976 · Philosophie</small>La nature et la justice</div></div>
   <nav id="nav">
     <a href="#accueil" data-v="accueil">Accueil</a>
+    <a href="#cours" data-v="cours">Cours</a>
     <a href="#qcm" data-v="qcm">QCM</a>
     <a href="#etudes" data-v="etudes">Études de texte</a>
     <a href="#trous" data-v="trous">Textes à trous</a>
@@ -54,6 +55,7 @@
     <div class="row"><input type="text" id="pseudo" maxlength="40" placeholder="Ex. : Léa, terminale 3" style="max-width:340px"><span id="pseudoOk" class="note"></span></div>
   </div>
   <div class="grid2">
+    <a class="tile" href="#cours"><svg class="ic"><use href="#book"/></svg><b>Le cours en résumé</b><p class="mut" style="margin:6px 0 0">À lire en premier : le cours illustré de schémas, et les références pour la dissertation.</p></a>
     <a class="tile" href="#qcm"><svg class="ic"><use href="#sun"/></svg><b>QCM progressif — 43 questions</b><p class="mut" style="margin:6px 0 0">3 niveaux, de facile à difficile, nature et justice. +1 bonne réponse, −0,5 erreur, 0 si tu passes. Note sur 20.</p></a>
     <a class="tile" href="#etudes"><svg class="ic"><use href="#book"/></svg><b>4 études de texte</b><p class="mut" style="margin:6px 0 0">Pascal, Rousseau (×2), Montesquieu. 10 questions chacune, avec indices et reformulations.</p></a>
     <a class="tile" href="#trous"><svg class="ic"><use href="#seed"/></svg><b>7 textes à trous</b><p class="mut" style="margin:6px 0 0">Complète le cours avec la banque de mots. Points négatifs en cas d'erreur.</p></a>
@@ -64,6 +66,13 @@
     <a class="tile" href="#direct"><svg class="ic"><use href="#sun"/></svg><b>Jouer entre amis</b><p class="mut" style="margin:6px 0 0">Invite tes amis par lien : quiz en coop ou en individuel, avec classement.</p></a>
   </div>
   <div class="card" id="saveInfo"></div>
+</section>
+
+<section id="v-cours" class="hide">
+  <h1>Le cours en résumé</h1>
+  <div class="rule"></div>
+  <p class="mut">Tout ce qu'il faut savoir sur la nature et la justice, avec des schémas pour mémoriser, puis une boîte à références (citations, exemples, plans types) pour la dissertation. Lis-le avant de te tester !</p>
+  <div id="cBody"></div>
 </section>
 
 <section id="v-qcm" class="hide">
@@ -136,15 +145,16 @@
 
 
 </main>
-<script src="data.js?v=202611181604"></script>
-<script src="data2.js?v=202611181604"></script>
-<script src="data3.js?v=202611181604"></script>
-<script src="app.js?v=202611181604"></script>
-<script src="trous.js?v=202611181604"></script>
-<script src="jardin.js?v=202611181604"></script>
-<script src="live.js?v=202611181604"></script>
-<script src="flash.js?v=202611181604"></script>
-<script src="mots.js?v=202611181604"></script>
-<script src="bac.js?v=202611181604"></script>
+<script src="data.js?v=202611181611"></script>
+<script src="data2.js?v=202611181611"></script>
+<script src="data3.js?v=202611181611"></script>
+<script src="app.js?v=202611181611"></script>
+<script src="trous.js?v=202611181611"></script>
+<script src="jardin.js?v=202611181611"></script>
+<script src="live.js?v=202611181611"></script>
+<script src="cours.js?v=202611181611"></script>
+<script src="flash.js?v=202611181611"></script>
+<script src="mots.js?v=202611181611"></script>
+<script src="bac.js?v=202611181611"></script>
 </body>
 </html>

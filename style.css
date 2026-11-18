@@ -341,3 +341,38 @@ button.ans:disabled{cursor:default}
 @keyframes slap{0%{transform:scale(2.6) rotate(-25deg);opacity:0}60%{transform:scale(.92) rotate(-4deg);opacity:1}100%{transform:scale(1) rotate(-6deg)}}
 @keyframes wobble{50%{transform:scale(1.04) rotate(-3deg)}}
 @keyframes peel{to{transform:translateY(-40px) rotate(10deg) scale(.6);opacity:0}}
+
+/* ===== Cours ===== */
+.toc{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:6px;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);border:1.5px solid var(--line);border-radius:16px;padding:8px;margin-bottom:10px}
+.toc button{border:none;background:var(--blue-l);color:var(--blue-d);border-radius:99px;padding:5px 11px;font:700 13px "Nunito";cursor:pointer}
+.toc button:hover{background:var(--blue);color:#fff}
+.csec{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 20px;margin:14px 0;scroll-margin-top:80px;box-shadow:0 3px 0 rgba(31,99,214,.08)}
+.csec h2{margin-top:4px}
+.schema{width:100%;height:auto;max-width:640px;display:block;margin:12px auto;font-family:"Nunito",sans-serif}
+.keybox{background:var(--sun-l);border-left:5px solid var(--sun);border-radius:0 12px 12px 0;padding:10px 14px;margin:10px 0}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}.duo>div{background:var(--blue-l);border-radius:14px;padding:4px 14px}.duo h4{font-family:"Fredoka",sans-serif;color:var(--navy);margin:10px 0 0}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.three>div{background:var(--blue-l);border-radius:14px;padding:10px 12px}.three p{margin:4px 0 0;font-size:14.5px}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;position:relative;padding-top:14px}
+.timeline::before{content:"";position:absolute;left:4%;right:4%;top:22px;height:4px;background:linear-gradient(90deg,var(--blue),var(--grass-d));border-radius:4px}
+.timeline>div{position:relative;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:22px 12px 10px;margin-top:4px}
+.timeline>div::before{content:"";position:absolute;top:-6px;left:50%;margin-left:-8px;width:16px;height:16px;border-radius:50%;background:var(--sun);border:3px solid var(--navy)}
+.timeline span{float:right;font-size:12.5px;color:var(--mut);font-weight:700}.timeline p{margin:6px 0 0;font-size:14px}
+.flowgrid{display:grid;grid-template-columns:110px repeat(3,1fr);gap:6px;margin:12px 0}
+.flowgrid .fh{font:600 15px "Fredoka",sans-serif;color:var(--navy);text-align:center;padding:6px;background:var(--blue-l);border-radius:10px}
+.flowgrid .fh:first-child{background:none}
+.flowgrid .fa{font-weight:800;color:var(--navy);display:flex;flex-direction:column;justify-content:center}.flowgrid .fa small{font-weight:600;color:var(--mut);font-size:11.5px}
+.flowgrid .fc{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13.5px;position:relative}
+.flowgrid .fc.red{border-color:#f0b4b4;background:var(--ko-l)}.flowgrid .fc.green{border-color:#9fd6a7;background:var(--ok-l)}
+.chain{display:flex;align-items:stretch;gap:6px;margin:12px 0}
+.ck{flex:1;border-radius:14px;padding:10px 12px;border:2px solid}.ck span{display:block;font-size:12px;color:var(--mut);font-style:italic}.ck p{margin:6px 0 0;font-size:14px}
+.ck.red{background:var(--ko-l);border-color:#f0b4b4}.ck.sun{background:var(--sun-l);border-color:#f1d27a}.ck.green{background:var(--ok-l);border-color:#9fd6a7}
+.carrow{display:flex;align-items:center;font:700 26px "Fredoka";color:var(--navy)}
+.cits{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:10px}
+.cit{background:#fffdf6;border:1px solid #eadfbf;border-left:5px solid var(--wood);border-radius:0 14px 14px 0;padding:10px 14px}
+.cit blockquote{margin:6px 0;font-family:"Lora",Georgia,serif;font-size:15.5px;line-height:1.5}
+.cit .ca{font-size:13.5px;color:var(--mut)}
+.exs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.exs>div{background:var(--blue-l);border-radius:12px;padding:8px 12px;display:flex;flex-direction:column}.exs span{font-size:14px}
+@media (max-width:700px){.duo,.three{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}.timeline::before{display:none}.chain{flex-direction:column}.carrow{justify-content:center;transform:rotate(90deg)}
+ .flowgrid{grid-template-columns:1fr}.flowgrid .fh{display:none}.flowgrid .fa{margin-top:8px}.flowgrid .fc::before{display:block;font-size:11px;font-weight:800;color:var(--mut)}
+ .flowgrid .fa+.fc::before{content:"ÉTAT DE NATURE"}.flowgrid .fa+.fc+.fc::before{content:"CONTRAT"}.flowgrid .fa+.fc+.fc+.fc::before{content:"ÉTAT CIVIL"}}
