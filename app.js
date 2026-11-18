@@ -251,7 +251,7 @@ function gate(v){
 /* ========================= STICKER « Nous y est » au début du premier module ========================= */
 function showSticker(){
   const o=document.createElement("div"); o.className="sticker-wrap";
-  o.innerHTML=`<img class="sticker" src="gif/sticker_nous_y_est.png" alt="Nous y est" width="384" height="272">`;
+  o.innerHTML=`<img class="sticker" src="gif/sticker_nous_y_est.png?v=2" alt="Ça y est, nous y est" width="491" height="272">`;
   document.body.appendChild(o);
   const bye=()=>{ if(!o.isConnected) return; o.classList.add("bye"); setTimeout(()=>o.remove(),450); };
   o.addEventListener("click",bye); setTimeout(bye,2800);
