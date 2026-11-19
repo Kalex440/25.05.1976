@@ -28,7 +28,7 @@ function renderJardin(id){
 
   const beds = c.branches.map((b, bi) => `<div class="bed" style="--d:${bi * 0.12}s"><div class="sign">${esc(b.nom)}</div>${b.f.map((f, fi) => {
     const hue = (bi * 70 + fi * 25 + 200) % 360;
-    return `<div class="leaf ${f.b ? "blank" : "done"}" data-k="${bi}-${fi}" data-r="${esc(f.r)}" data-h="${hue}"><div class="pot">${f.b ? SVG_BUD : flowerSVG(hue)}</div><div class="lt"><span class="am">${esc(f.a)}</span><span class="an">${f.b ? "…" : esc(f.r)}</span></div></div>`;
+    return `<div class="leaf ${f.b ? "blank" : "done"}" ${f.b ? `tabindex="0" role="button" aria-label="Bourgeon : ${esc(f.a)}"` : ""} data-k="${bi}-${fi}" data-r="${esc(f.r)}" data-h="${hue}"><div class="pot">${f.b ? SVG_BUD : flowerSVG(hue)}</div><div class="lt"><span class="am">${esc(f.a)}</span><span class="an">${f.b ? "…" : esc(f.r)}</span></div></div>`;
   }).join("")}</div>`).join("");
 
   $("#jBody").innerHTML = `<p><a href="#jardin" class="btn alt sm">← Toutes les cartes</a></p>
@@ -43,6 +43,7 @@ function renderJardin(id){
   drawLives(); $("#gTime").textContent = fmtT(G.t); moveSun();
   $("#gGo").onclick = () => { $("#gStart").remove(); G.timer = setInterval(tick, 1000); };
   $("#game").addEventListener("click", onGameClick);
+  $("#game").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.closest(".leaf.blank")){ e.preventDefault(); e.target.closest(".leaf.blank").click(); } });
 }
 
 function fmtT(s){ return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }

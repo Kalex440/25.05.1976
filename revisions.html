@@ -10,7 +10,7 @@
 <script>try{var a=JSON.parse(localStorage.getItem("auth")||"null");if(!(a&&a.ok&&a.v===2&&(a.rem||Date.now()-a.t<432e5)))location.replace("index.html"+location.hash)}catch(e){location.replace("index.html"+location.hash)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=202611191226">
+<link rel="stylesheet" href="style.css?v=202611191234">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute">
@@ -27,15 +27,12 @@
   <div class="brand"><svg class="sunicon"><use href="#sun"/></svg><div><small>25.05.1976 · Philosophie</small>La nature et la justice</div></div>
   <nav id="nav">
     <a href="#accueil" data-v="accueil">Accueil</a>
-    <a href="#cours" data-v="cours">Cours</a>
-    <a href="#qcm" data-v="qcm">QCM</a>
-    <a href="#etudes" data-v="etudes">Études de texte</a>
-    <a href="#trous" data-v="trous">Textes à trous</a>
-    <a href="#jardin" data-v="jardin">Cartes mentales</a>
-    <a href="#flash" data-v="flash">Flashcards</a>
-    <a href="#mots" data-v="mots">Mots mêlés</a>
-    <a href="#bac" data-v="bac">Sujets de bac</a>
-    <a href="#direct" data-v="direct">Jouer entre amis</a>
+    <div class="ngroup" data-g="apprendre"><button class="nbtn" aria-expanded="false">📖 Apprendre ▾</button><div class="nmenu">
+      <a href="#cours" data-v="cours">Cours</a><a href="#flash" data-v="flash">Flashcards</a><a href="#bac" data-v="bac">Sujets de bac</a></div></div>
+    <div class="ngroup" data-g="entrainer"><button class="nbtn" aria-expanded="false">✏️ S'entraîner ▾</button><div class="nmenu">
+      <a href="#qcm" data-v="qcm">QCM</a><a href="#etudes" data-v="etudes">Études de texte</a><a href="#trous" data-v="trous">Textes à trous</a></div></div>
+    <div class="ngroup" data-g="jouer"><button class="nbtn" aria-expanded="false">🎮 Jouer ▾</button><div class="nmenu">
+      <a href="#jardin" data-v="jardin">Cartes mentales</a><a href="#mots" data-v="mots">Mots mêlés</a><a href="#direct" data-v="direct">Jouer entre amis</a></div></div>
     <a href="#mes-notes" data-v="mes-notes">Mes notes</a>
     <a href="#" class="out" onclick="logout();return false">Déconnexion</a>
   </nav>
@@ -52,6 +49,10 @@
   <div class="card">
     <h3 style="margin-top:0">Ton prénom (ou pseudo)</h3>
     <p class="note" style="margin-top:0">Il apparaît dans le récapitulatif de tes notes envoyé à Kendji.</p>
+    <details class="privacy"><summary>🔒 Tes données : ce qui est envoyé, et à qui</summary>
+      <p>Quand tu as terminé les 4 modules, le site envoie <b>une seule fois</b> à Kendji (ton assistant d'éducation), par mail, ton <b>prénom ou pseudo</b> et tes <b>notes</b>. L'envoi passe par le service FormSubmit. Rien d'autre n'est collecté : ni nom de famille, ni adresse, ni téléphone.</p>
+      <p>Tes notes et ta progression restent sur ton appareil. Tu peux utiliser un pseudo si tu ne veux pas donner ton prénom, et demander à Kendji de supprimer ton mail.</p>
+    </details>
     <div class="row"><input type="text" id="pseudo" maxlength="40" placeholder="Ex. : Léa, terminale 3" style="max-width:340px"><span id="pseudoOk" class="note"></span></div>
   </div>
   <div class="grid2">
@@ -145,17 +146,17 @@
 
 
 </main>
-<script src="data.js?v=202611191226"></script>
-<script src="data2.js?v=202611191226"></script>
-<script src="data3.js?v=202611191226"></script>
-<script src="app.js?v=202611191226"></script>
-<script src="trous.js?v=202611191226"></script>
-<script src="jardin.js?v=202611191226"></script>
-<script src="live.js?v=202611191226"></script>
-<script src="cours.js?v=202611191226"></script>
-<script src="flash.js?v=202611191226"></script>
-<script src="mots.js?v=202611191226"></script>
-<script src="bac.js?v=202611191226"></script>
-<script src="papangue.js?v=202611191226"></script>
+<script src="data.js?v=202611191234"></script>
+<script src="data2.js?v=202611191234"></script>
+<script src="data3.js?v=202611191234"></script>
+<script src="app.js?v=202611191234"></script>
+<script src="trous.js?v=202611191234"></script>
+<script src="jardin.js?v=202611191234"></script>
+<script src="live.js?v=202611191234"></script>
+<script src="cours.js?v=202611191234"></script>
+<script src="flash.js?v=202611191234"></script>
+<script src="mots.js?v=202611191234"></script>
+<script src="bac.js?v=202611191234"></script>
+<script src="papangue.js?v=202611191234"></script>
 </body>
 </html>

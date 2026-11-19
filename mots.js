@@ -35,7 +35,7 @@ function renderMots(){
   $("#mBody").innerHTML = `
   <div class="row" style="justify-content:space-between"><span class="pill" id="mCount">0 / ${MOTS.length} mots</span><span class="note" id="mTime">0:00</span><button class="btn alt sm" id="mNew">Nouvelle grille</button></div>
   <div class="mmwrap">
-    <div class="mm" id="mGrid" style="--n:${MM_SIZE}">${W.g.map((row, r) => row.map((ch, c) => `<div class="mc" data-r="${r}" data-c="${c}">${ch}</div>`).join("")).join("")}</div>
+    <div class="mm" id="mGrid" style="--n:${MM_SIZE}">${W.g.map((row, r) => row.map((ch, c) => `<div class="mc" tabindex="0" role="button" aria-label="Lettre ${ch}, ligne ${r + 1}, colonne ${c + 1}" data-r="${r}" data-c="${c}">${ch}</div>`).join("")).join("")}</div>
     <div class="mlist">${MOTS.map(w => `<div class="mw" data-m="${w.m}"><span class="mth ${w.th === "nature" ? "n" : w.th === "justice" ? "j" : "b"}"></span>${esc(w.w)}</div>`).join("")}
       <div class="note" style="margin-top:6px"><span class="mth n"></span> nature · <span class="mth j"></span> justice · <span class="mth b"></span> les deux</div></div>
   </div>
@@ -46,6 +46,12 @@ function renderMots(){
   clearInterval(mmTimer); mmTimer = setInterval(() => { const e = $("#mTime"); if (!e || !W){ return; } if (Object.keys(W.found).length < MOTS.length){ const s = Math.floor((Date.now() - W.t0) / 1000); e.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); } }, 1000);
   const grid = $("#mGrid");
   const cellAt = e => { const t = document.elementFromPoint(e.clientX, e.clientY); return t && t.classList.contains("mc") ? t : null; };
+  grid.addEventListener("keydown", e => {
+    const c = e.target.closest(".mc"); if (!c) return;
+    const r = +c.dataset.r, k = +c.dataset.c, mv = {ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1]}[e.key];
+    if (mv){ e.preventDefault(); const n = cell(Math.min(MM_SIZE - 1, Math.max(0, r + mv[0])), Math.min(MM_SIZE - 1, Math.max(0, k + mv[1]))); n && n.focus(); return; }
+    if (e.key === "Enter" || e.key === " "){ e.preventDefault(); if (W.start && W.start !== c){ const s0 = W.start; W.start = null; check(s0, c); } else if (W.start === c){ W.start = null; clearHl(); } else { W.start = c; clearHl(); c.classList.add("start"); } }
+  });
   grid.addEventListener("pointerdown", e => { const c = cellAt(e); if (!c) return; e.preventDefault(); W.drag = {from: c, moved: false}; grid.setPointerCapture(e.pointerId); hl(c, c); });
   grid.addEventListener("pointermove", e => { if (!W.drag) return; const c = cellAt(e); if (c && c !== W.drag.from){ W.drag.moved = true; hl(W.drag.from, c); } });
   grid.addEventListener("pointerup", e => {

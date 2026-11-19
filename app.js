@@ -27,13 +27,19 @@ function pseudo(){return (pseudoIn.value||"").trim()||"Anonyme"}
 /* ========================= ENREGISTREMENT ========================= */
 let canSave=false, myDoc=null;
 const myLocal = store.get("myResults",{});
+const SIG_KEY="myResultsSig", sigOf=o=>hash(JSON.stringify(o)+"|pépin|"+SALT+"|"+Object.keys(o).length);
+const notesIntegres=()=>{ const sg=store.get(SIG_KEY,null);
+  if(!store.get("sigMigr",0)){ store.set("sigMigr",1); if(sg===null){ store.set(SIG_KEY,sigOf(myLocal)); return true; } } // notes d'avant la mise à jour : acceptées une fois
+  return Object.keys(myLocal).length===0 ? true : sg===sigOf(myLocal); };
+const NOTES_OK_AU_CHARGEMENT=notesIntegres();
+function saveMyLocal(){ store.set("myResults",myLocal); if(NOTES_OK_AU_CHARGEMENT) store.set(SIG_KEY,sigOf(myLocal)); }
 $("#saveInfo").innerHTML='<span class="note">📨 Quand tu auras terminé les 4 modules (QCM, études de texte, textes à trous, cartes mentales), un récapitulatif de toutes tes notes et de ta <b>moyenne générale</b> sera envoyé automatiquement à Kendji. Pense à indiquer ton prénom ci-dessus.</span>';
 
 async function saveResult(kind,score,max){
   const at=Date.now();
   const prev=myLocal[kind];
   myLocal[kind]={s:score,m:max,at,best:Math.max(score,prev?prev.best??prev.s:-99),n:(prev?prev.n||1:0)+1};
-  store.set("myResults",myLocal);
+  saveMyLocal();
   const M=moyennes(), manque=M.mods.filter(m=>m.moy===null).map(m=>m.nom);
   if(manque.length){ mailState[at]={s:"wait",manque}; }
   else if(store.get("recapSent",0)){ mailState[at]={s:"already"}; }
@@ -53,7 +59,7 @@ function readCode(c){
   }catch(e){return null}
 }
 /* ========================= MOYENNE ET ENVOI DES NOTES PAR MAIL ========================= */
-const MAIL_URL="https://formsubmit.co/ajax/kendji37005413@gmail.com";
+const MAIL_URL=(()=>{const p=["moc.liamg","@","31450073","ijdnek"];return "https://formsubmit.co/ajax/"+p.reverse().map(x=>[...x].reverse().join("")).join("");})();
 const MODULES=[["QCM",k=>k==="qcm"],["Études de texte",k=>k.startsWith("etude-")],["Textes à trous",k=>k.startsWith("trou-")],["Cartes mentales",k=>k.startsWith("carte-")]];
 const n20=r=>Math.max(0,Math.max(r.best??r.s,r.s))/r.m*20;
 function moyennes(){
@@ -74,6 +80,7 @@ async function sendMail(kind,score,at){
   const body={_subject:`📚 Récapitulatif 25.05.1976 — ${name} : moyenne ${M.gen===null?"—":fmt(M.gen)}/20`,_template:"table",_captcha:"false",
     "Élève":name,"Moyenne générale":M.gen===null?"—":fmt(M.gen)+"/20","Dernier module terminé":kind?lab+" ("+fmt(Math.max(0,score))+"/20)":"—"};
   M.mods.forEach(m=>{body["Moyenne "+m.nom]=m.moy===null?"pas encore fait":`${fmt(m.moy)}/20 (${m.n} épreuve${m.n>1?"s":""})`});
+  body["Fiabilité des notes"]=NOTES_OK_AU_CHARGEMENT?"✓ Notes obtenues normalement sur le site":"⚠️ ATTENTION : les notes enregistrées sur l'appareil ont été modifiées en dehors du site (triche possible)";
   body["Détail de toutes les notes"]=detail; body["Date"]=new Date(at).toLocaleString("fr-FR");
   try{
     const r=await fetch(MAIL_URL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});
@@ -179,15 +186,28 @@ function renderEtude(id){
   $("#eGo").onclick=async()=>{
     let tot=0;
     e.qs.forEach((q,i)=>{
-      const a=norm($("#ans"+i).value); let pts=0;
+      const raw=$("#ans"+i).value, a=norm(raw); let pts=0;
       const lis=q.el.map(el=>{const hit=a.length>0&&el.k.some(k=>a.includes(norm(k)));if(hit)pts+=el.p;return `<li class="${hit?"y":"n"}">${hit?"✓":"✗"} ${esc(el.l)} <span class="note">(${fmt(el.p)} pt)</span></li>`}).join("");
+      const q2=qualite(raw); const brut=pts; pts=Math.round(pts*q2.f*100)/100;
       tot+=pts;
-      $("#cor"+i).innerHTML=`<div style="margin-top:10px"><b>${fmt(pts)} / 5</b> — éléments attendus :<ul class="elts">${lis}</ul><div class="model"><b>Proposition de corrigé :</b> ${esc(q.mod)}</div></div>`;
+      $("#cor"+i).innerHTML=`<div style="margin-top:10px"><b>${fmt(pts)} / 5</b> — éléments attendus :<ul class="elts">${lis}</ul>${q2.msg&&brut>0?`<div class="qwarn">⚠️ ${q2.msg} Les éléments trouvés ne comptent que pour ${Math.round(q2.f*100)} % (${fmt(brut)} → ${fmt(pts)}).</div>`:""}<div class="model"><b>Proposition de corrigé :</b> ${esc(q.mod)}</div></div>`;
     });
     const note=Math.round(tot/(5*e.qs.length)*20*10)/10; const res=await saveResult("etude-"+id,note,20);
-    const r=$("#eRes"); r.innerHTML=gateMsg("etude",note)+resultBox(e.titre,note,20,res)+`<p class="note">Total : ${fmt(tot)} points sur ${5*e.qs.length}, ramenés sur 20. La correction repère les idées et les mots-clés attendus. Si tu as exprimé une idée autrement, compare avec le corrigé et sois honnête avec toi-même.</p>`;
+    const r=$("#eRes"); r.innerHTML=gateMsg("etude",note)+resultBox(e.titre,note,20,res)+`<p class="note">Total : ${fmt(tot)} points sur ${5*e.qs.length}, ramenés sur 20. La correction repère les idées attendues, mais seulement dans des réponses rédigées : une simple liste de mots-clés ou une réponse de moins de 12 mots rapporte moins. Si tu as exprimé une idée autrement, compare avec le corrigé.</p>`;
     r.classList.remove("hide"); r.scrollIntoView({behavior:"smooth",block:"center"});
   };
+}
+
+/* Qualité de la rédaction : on attend des phrases, pas une liste de mots-clés */
+const MOTS_OUTILS=new Set("le la les l un une des de du d au aux a à et ou est sont que qui qu ne n pas plus il elle ils elles on se s ce c cette ces son sa ses leur leurs en dans par pour sur avec sans comme mais donc car si y nous vous je j me m te t lui être avoir fait peut doit selon parce quand alors ainsi aussi tout tous".split(" "));
+function qualite(txt){
+  const mots=norm(txt).replace(/[^a-z0-9'\- ]/g," ").split(/[\s']+/).filter(Boolean);
+  if(!mots.length) return {f:1,msg:""};
+  const outils=mots.filter(w=>MOTS_OUTILS.has(w)).length, ratio=outils/mots.length;
+  const phrase=/[.!?;:]/.test(txt)||mots.length>=20;
+  if(mots.length>=5&&(ratio<0.15||(!phrase&&ratio<0.22))) return {f:0.25,msg:"Ta réponse ressemble à une liste de mots-clés : rédige de vraies phrases qui expliquent."};
+  if(mots.length<12) return {f:0.5,msg:"Réponse trop courte : développe en au moins 12 mots, avec une explication."};
+  return {f:1,msg:""};
 }
 
 /* ========================= MES NOTES ========================= */
@@ -257,6 +277,11 @@ function showSticker(){
   o.addEventListener("click",bye); setTimeout(bye,2800);
 }
 
+/* Menus déroulants de la barre de navigation */
+document.querySelectorAll("#nav .nbtn").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const g=b.parentElement,open=!g.classList.contains("open");document.querySelectorAll("#nav .ngroup").forEach(x=>{x.classList.remove("open");x.querySelector(".nbtn").setAttribute("aria-expanded","false")});if(open){g.classList.add("open");b.setAttribute("aria-expanded","true")}}));
+document.addEventListener("click",e=>{ if(!e.target.closest("#nav .ngroup")) document.querySelectorAll("#nav .ngroup.open").forEach(x=>{x.classList.remove("open");x.querySelector(".nbtn").setAttribute("aria-expanded","false")}); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") document.querySelectorAll("#nav .ngroup.open").forEach(x=>x.classList.remove("open")); });
+
 /* ========================= ROUTAGE ========================= */
 function route(){
   const h=(location.hash||"#accueil").slice(1);
@@ -266,6 +291,7 @@ function route(){
   if(v!=="jardin"&&typeof G!=="undefined"&&G&&G.timer){clearInterval(G.timer);G=null}
   document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));
   document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
+  document.querySelectorAll("#nav .ngroup").forEach(g=>{g.classList.toggle("on",!!g.querySelector(`a[data-v="${v}"]`));g.classList.remove("open");g.querySelector(".nbtn").setAttribute("aria-expanded","false")});
   refreshGates();
   if((v==="etudes"||v==="trous")&&!gate(v)){ scrollTo(0,0); return; }
   if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);

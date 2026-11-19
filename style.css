@@ -391,3 +391,29 @@ button.ans:disabled{cursor:default}
 .papangue.loop svg{animation:looping .9s ease-in-out}
 @keyframes looping{to{transform:rotate(-360deg)}}
 @media (max-width:560px){.papangue svg{width:96px;height:60px}}
+
+/* ===== Menu regroupé ===== */
+nav{align-items:center}
+.ngroup{position:relative}
+.nbtn{border:none;background:none;color:#fff;font:700 14px "Nunito";padding:7px 13px;border-radius:99px;cursor:pointer;opacity:.9;white-space:nowrap}
+.nbtn:hover{background:rgba(255,255,255,.15);opacity:1}
+.ngroup.on>.nbtn{background:#fff;color:var(--blue-d);opacity:1}
+.nmenu{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:190px;background:#fff;border:2px solid var(--blue);border-radius:14px;padding:6px;box-shadow:0 6px 0 var(--blue-d),0 12px 30px rgba(18,48,107,.25);z-index:60;animation:rise .2s both}
+.ngroup.open .nmenu{display:flex;flex-direction:column;gap:2px}
+.nmenu a{color:var(--navy)!important;opacity:1!important;border-radius:10px!important;padding:9px 12px!important}
+.nmenu a:hover{background:var(--blue-l)!important}
+.nmenu a.on{background:var(--blue)!important;color:#fff!important}
+@media (max-width:700px){nav{flex-wrap:wrap!important;overflow:visible!important;gap:4px}nav a,.nbtn{font-size:13.5px;padding:6px 10px}
+ header .wrap{position:relative} nav{position:static} .ngroup{position:static} .nmenu{left:12px;right:12px;top:auto;margin-top:6px}}
+/* ===== Données personnelles ===== */
+.privacy{margin-top:10px;background:var(--blue-l);border-radius:12px;padding:8px 12px;font-size:14px}
+.privacy summary{cursor:pointer;font-weight:800;color:var(--blue-d)}
+.privacy p{margin:6px 0}
+/* ===== Correction stricte ===== */
+.qwarn{margin:8px 0;padding:8px 12px;border-radius:10px;background:var(--sun-l);border:1.5px solid #f1d27a;color:#7a5600;font-size:14px;font-weight:700}
+/* ===== Papangue derrière le contenu ===== */
+.papangue{z-index:0!important}
+main.wrap{position:relative;z-index:2}
+/* ===== Focus clavier visible ===== */
+.leaf.blank:focus-visible,.mc:focus-visible,.seed:focus-visible,.opt:focus-visible,.btn:focus-visible,.nbtn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+header{z-index:10!important}
