@@ -271,6 +271,7 @@ function route(){
   if(v==="etudes") renderEtude(h.startsWith("etude-")?h.slice(6):null);
   if(v==="trous") renderTrous(h.startsWith("trou-")?h.slice(5):null);
   if(v==="jardin") renderJardin(h.startsWith("carte-")?h.slice(6):null);
+  if(window.papangue){ v==="accueil"?papangue.start():papangue.stop(); }
   if(v==="cours") renderCours();
   if(v==="flash") renderFlash();
   if(v==="mots"&&!W) renderMots();

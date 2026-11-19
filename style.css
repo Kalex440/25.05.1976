@@ -376,3 +376,18 @@ button.ans:disabled{cursor:default}
 @media (max-width:700px){.duo,.three{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}.timeline::before{display:none}.chain{flex-direction:column}.carrow{justify-content:center;transform:rotate(90deg)}
  .flowgrid{grid-template-columns:1fr}.flowgrid .fh{display:none}.flowgrid .fa{margin-top:8px}.flowgrid .fc::before{display:block;font-size:11px;font-weight:800;color:var(--mut)}
  .flowgrid .fa+.fc::before{content:"ÉTAT DE NATURE"}.flowgrid .fa+.fc+.fc::before{content:"CONTRAT"}.flowgrid .fa+.fc+.fc+.fc::before{content:"ÉTAT CIVIL"}}
+
+/* ===== Le papangue qui survole l'accueil ===== */
+.papangue{position:fixed;left:0;top:0;z-index:40;pointer-events:none;opacity:0;transition:opacity .8s;will-change:transform;filter:drop-shadow(0 8px 6px rgba(18,48,107,.18))}
+.papangue.show{opacity:1}
+.papangue svg{display:block;pointer-events:auto;cursor:pointer}
+.papangue .wing{transform-box:view-box}
+.papangue .wing.front{transform-origin:90px 50px;animation:flapF .55s ease-in-out infinite}
+.papangue .wing.back{transform-origin:66px 48px;animation:flapB .55s ease-in-out infinite}
+.papangue.glide .wing{animation:none}
+.papangue.glide .wing.front{transform:scaleY(.9)}
+@keyframes flapF{0%,100%{transform:scaleY(1)}50%{transform:scaleY(-.55)}}
+@keyframes flapB{0%,100%{transform:scaleY(1)}50%{transform:scaleY(-.45)}}
+.papangue.loop svg{animation:looping .9s ease-in-out}
+@keyframes looping{to{transform:rotate(-360deg)}}
+@media (max-width:560px){.papangue svg{width:96px;height:60px}}
