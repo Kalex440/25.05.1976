@@ -1,7 +1,7 @@
 /* ========================= ACCÈS ========================= */
 (function(){
   let ok=false;
-  try{ const a=JSON.parse(localStorage.getItem("auth")||"null"); ok=!!(a&&a.ok&&(a.rem||Date.now()-a.t<12*3600e3)); }catch(e){}
+  try{ const a=JSON.parse(localStorage.getItem("auth")||"null"); ok=!!(a&&a.ok&&a.v===2&&(a.rem||Date.now()-a.t<12*3600e3)); }catch(e){}
   if(!ok) location.replace("index.html"+location.hash);
 })();
 function logout(){ try{localStorage.removeItem("auth")}catch(e){} location.replace("index.html"); }
